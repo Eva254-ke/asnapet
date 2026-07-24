@@ -1,0 +1,130 @@
+---
+// src/components/Products.astro
+
+const categories = [
+  {
+    title: 'Farming & Agriculture',
+    eyebrow: 'Seeds, feeds, tools',
+    description: 'Farm inputs, sprayers, feeds and tools selected for small farms and local growers.',
+    image: '/images/products-agriculture.jpg',
+    href: '/products'
+  },
+  {
+    title: 'Household Essentials',
+    eyebrow: 'Kitchen, cleaning, comfort',
+    description: 'Kitchenware, cleaning items, storage and home basics for everyday Kenyan homes.',
+    image: '/images/products-household.webp',
+    href: '/products'
+  },
+  {
+    title: 'Shop & Bulk Supply',
+    eyebrow: 'Retail, kiosks, offices',
+    description: 'Useful consumables and mixed supplies for small businesses, offices and resellers.',
+    image: '/images/products-bulk-supply.webp',
+    href: '/products'
+  },
+  {
+    title: 'Cleaning & Care',
+    eyebrow: 'Laundry, home care',
+    description: 'Cleaning equipment, detergents and practical household care products.',
+    image: '/images/products-cleaning.jpg',
+    href: '/products'
+  },
+  {
+    title: 'Kitchen & Dining',
+    eyebrow: 'Cookware, utensils',
+    description: 'Cookware, utensils and food storage items for the modern home.',
+    image: '/images/products-kitchen-dining.jpg',
+    href: '/products'
+  },
+  {
+    title: 'Bedding & Bath',
+    eyebrow: 'Comfort basics',
+    description: 'Bedsheets, towels and bathroom essentials selected for comfort and durability.',
+    image: '/images/products-bedding-bath.jpg',
+    href: '/products'
+  },
+  {
+    title: 'Home Appliances',
+    eyebrow: 'Daily convenience',
+    description: 'Electric kettles, blenders, irons and handy appliances for smoother home routines.',
+    image: '/images/products-home-appliances.png',
+    href: '/products'
+  },
+  {
+    title: 'Storage & Organization',
+    eyebrow: 'Bins, baskets, shelves',
+    description: 'Storage containers, organizers and space-saving items for tidier homes and shops.',
+    image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80',
+    href: '/products'
+  },
+  {
+    title: 'Personal Care',
+    eyebrow: 'Everyday wellness',
+    description: 'Bath, grooming and personal care basics for families, offices and small retailers.',
+    image: '/images/products-personal-care.jpg',
+    href: '/products'
+  }
+];
+
+const strengths = [
+  { title: 'Local fit', text: 'Products are selected for Nairobi homes, farms, kiosks and small operators.' },
+  { title: 'Stock clarity', text: 'We confirm availability before you commit, so you know what can be supplied.' },
+  { title: 'Practical sourcing', text: 'Supplier choices focus on useful quality, sensible pricing and repeat availability.' }
+];
+
+const trustPoints = ['Home', 'Farm', 'Shop'];
+---
+
+<section class="products section-lazy" id="products" aria-labelledby="products-title">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">Curated product lines</span>
+      <h2 id="products-title">Simple categories for everyday supply needs.</h2>
+      <p>Focused lines for households, farms and small businesses, with product choices that feel familiar to the local market.</p>
+    </div>
+
+    <div class="products__grid">
+      {categories.map((category) => (
+        <a class="category-showcase" href={category.href} aria-label={`View ${category.title}`}>
+          <img src={category.image} alt={`${category.title} supplies`} class="category-showcase__image" loading="lazy" decoding="async" width="1200" height="900" />
+          <span class="category-showcase__overlay"></span>
+          <span class="category-showcase__content">
+            <span class="category-showcase__eyebrow">{category.eyebrow}</span>
+            <span class="category-showcase__title">{category.title}</span>
+            <span class="category-showcase__text">{category.description}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <div class="products__cta-row">
+      <a class="btn btn-primary products__read-more" href="/products">Read more</a>
+    </div>
+  </div>
+</section>
+
+<section class="why-us section-lazy" id="why-us" aria-labelledby="why-us-title">
+  <div class="container why-us__container">
+    <div class="section-heading section-heading--left why-us__heading">
+      <span class="eyebrow">Why choose us</span>
+      <h2 id="why-us-title">Practical local supply, made simple from first message to delivery.</h2>
+      <p>Talk to a real person, get clear stock updates and choose products that suit your home, farm or business without a complicated checkout process.</p>
+
+      <div class="why-us__proof" aria-label="Supply focus areas">
+        {trustPoints.map((point) => (
+          <span>{point}</span>
+        ))}
+      </div>
+    </div>
+
+    <div class="why-us__grid">
+      {strengths.map((item) => (
+        <article class="why-card">
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

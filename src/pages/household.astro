@@ -1,0 +1,139 @@
+---
+// src/pages/household.astro
+import Layout from '../layout/Layout.astro';
+
+const whatsappLink = 'https://wa.me/254707429706?text=Hello,%20I%20am%20interested%20in%20your%20Household%20Essentials%20catalog.';
+
+const heroHighlights = [
+  'Kitchenware',
+  'Cleaning supplies',
+  'Appliances',
+  'Bedding & bath'
+];
+
+const subcategories = [
+  {
+    title: 'Kitchen & Dining',
+    description: 'Cookware, utensils, storage containers and dining essentials for everyday meals.',
+    image: '/images/products-kitchen-dining.jpg',
+    items: ['Cookware sets', 'Serving pieces', 'Food storage']
+  },
+  {
+    title: 'Home Appliances',
+    description: 'Electric kettles, blenders, irons and reliable tools that make home routines easier.',
+    image: '/images/products-home-appliances.png',
+    items: ['Kettles', 'Blenders', 'Irons']
+  },
+  {
+    title: 'Cleaning Supplies',
+    description: 'Detergents, mops, brooms and organizers for clean, efficient spaces.',
+    image: '/images/products-cleaning.jpg',
+    items: ['Detergents', 'Mops & brooms', 'Organizers']
+  },
+  {
+    title: 'Bedding & Bath',
+    description: 'Bedsheets, towels and bathroom basics selected for comfort and daily durability.',
+    image: '/images/products-bedding-bath.jpg',
+    items: ['Bedsheets', 'Towels', 'Bathroom basics']
+  },
+  {
+    title: 'Storage & Organization',
+    description: 'Bins, baskets, racks and containers that help homes and small shops stay orderly.',
+    image: '/images/products-bulk-supply.webp',
+    items: ['Storage bins', 'Baskets', 'Shelving helpers']
+  },
+  {
+    title: 'Personal Care',
+    description: 'Practical bath, grooming and wellness basics for family and workplace needs.',
+    image: '/images/products-personal-care.jpg',
+    items: ['Grooming basics', 'Bath care', 'Daily wellness']
+  }
+];
+
+const serviceSteps = [
+  { title: 'Send your list', text: 'Share the household items you need, even if the list is mixed.' },
+  { title: 'Confirm stock', text: 'We check availability and suggest practical alternatives where needed.' },
+  { title: 'Arrange supply', text: 'Get clear next steps for pricing, pickup or delivery support.' }
+];
+---
+
+<Layout title="Household Essentials" description="Explore household essentials from Asnapet Treasures, including kitchenware, cleaning supplies, appliances, bedding and bath items.">
+  <header class="category-header category-header--household">
+    <div class="container category-header__container household-hero">
+      <div class="household-hero__copy">
+        <span class="eyebrow">Household catalog</span>
+        <h1 class="category-header__title">Practical essentials for a better-run home.</h1>
+        <p class="category-header__subtitle">
+          Order kitchenware, cleaning supplies, appliances, storage items and comfort basics with direct WhatsApp support and availability checks before you commit.
+        </p>
+        <div class="household-hero__actions">
+          <a href={whatsappLink} class="btn btn-primary">Request Household Catalog</a>
+          <a href="#household-sections" class="btn btn-secondary">Browse Categories</a>
+        </div>
+      </div>
+
+      <div class="household-hero__visual" aria-label="Featured household essentials">
+        <img src="/images/products-household.webp" alt="Kitchen and household essentials arranged on a counter" class="household-hero__image" width="1200" height="900" />
+        <div class="household-hero__panel">
+          <span>Popular lines</span>
+          <div class="household-hero__chips">
+            {heroHighlights.map((item) => (
+              <span>{item}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="category-content section-lazy household-content" aria-labelledby="household-sections">
+    <div class="container">
+      <div class="section-heading section-heading--left household-heading">
+        <span class="eyebrow">Available lines</span>
+        <h2 id="household-sections">Household products grouped for faster ordering.</h2>
+        <p>Browse the main categories, then send the list you need so the team can confirm what is currently available.</p>
+      </div>
+
+      <div class="subcategory-grid subcategory-grid--household">
+        {subcategories.map((sub) => (
+          <article class="subcategory-card household-card">
+            <img src={sub.image} alt={`${sub.title} products`} class="subcategory-card__image" loading="lazy" decoding="async" width="1000" height="760" />
+            <div class="subcategory-card__content household-card__content">
+              <span class="household-card__label">Household line</span>
+              <h3 class="subcategory-card__title">{sub.title}</h3>
+              <p class="subcategory-card__text">{sub.description}</p>
+              <div class="household-card__items" aria-label={`${sub.title} examples`}>
+                {sub.items.map((item) => (
+                  <span>{item}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <section class="household-service" aria-labelledby="household-service-title">
+        <div class="section-heading section-heading--left household-service__heading">
+          <span class="eyebrow">How it works</span>
+          <h2 id="household-service-title">A simple way to source mixed household needs.</h2>
+        </div>
+        <div class="household-service__steps">
+          {serviceSteps.map((step, index) => (
+            <article class="household-step">
+              <span class="household-step__number">0{index + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="category-cta category-cta--household" aria-labelledby="category-cta-title">
+        <span class="eyebrow">Need something specific?</span>
+        <h2 class="category-cta__title" id="category-cta-title">Send your list and we will confirm availability.</h2>
+        <p class="category-cta__text">Our catalog is updated regularly. We can check current stock, pricing and suitable delivery options for household, office and small shop needs.</p>
+        <a href={whatsappLink} class="btn btn-secondary">Chat on WhatsApp</a>
+      </section>
+    </div>
+  </section>
+</Layout>

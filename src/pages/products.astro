@@ -1,0 +1,85 @@
+---
+import Layout from '../layout/Layout.astro';
+
+const productGroups = [
+  {
+    title: 'Farm Inputs',
+    text: 'Seeds, fertilizers, feeds, sprayers and practical tools for small and medium farms.',
+    image: '/images/products-agriculture.jpg'
+  },
+  {
+    title: 'Household Basics',
+    text: 'Kitchenware, cleaning items, storage solutions and day-to-day home essentials.',
+    image: '/images/products-household.webp'
+  },
+  {
+    title: 'Shop Supplies',
+    text: 'Bulk consumables and mixed supply lines for kiosks, offices and local resellers.',
+    image: '/images/products-bulk-supply.webp'
+  },
+  {
+    title: 'Cleaning & Care',
+    text: 'Laundry detergents, cleaning equipment and practical household care products.',
+    image: '/images/products-cleaning.jpg'
+  },
+  {
+    title: 'Kitchen & Dining',
+    text: 'Cookware, utensils, serving pieces and food storage items for the modern home.',
+    image: '/images/products-kitchen-dining.jpg'
+  },
+  {
+    title: 'Bedding & Bath',
+    text: 'Bedsheets, towels and bathroom essentials selected for comfort and durability.',
+    image: '/images/products-bedding-bath.jpg'
+  },
+  {
+    title: 'Home Appliances',
+    text: 'Electric kettles, blenders, irons and handy appliances for smoother home routines.',
+    image: '/images/products-home-appliances.png'
+  },
+  {
+    title: 'Storage & Organization',
+    text: 'Storage containers, organizers and space-saving items for tidier homes and shops.',
+    image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80'
+  },
+  {
+    title: 'Personal Care',
+    text: 'Bath, grooming and personal care basics for families, offices and small retailers.',
+    image: '/images/products-personal-care.jpg'
+  }
+];
+---
+
+<Layout title="Products" description="Browse the full Asnapet Treasures product range, including farm inputs, household basics, shop supplies and more.">
+  <section class="category-header">
+    <div class="container category-header__container">
+      <span class="eyebrow">Products</span>
+      <h1 class="category-header__title">All products for home, farm and shop supply.</h1>
+      <p class="category-header__subtitle">
+        Browse the full product range in one place, then contact the team when you are ready to confirm availability, pricing or delivery.
+      </p>
+      <a href="https://wa.me/254707429706?text=Hello,%20I%20would%20like%20the%20full%20product%20catalog." class="btn btn-primary">Request Full Catalog</a>
+    </div>
+  </section>
+
+  <section class="category-content section-lazy" aria-labelledby="products-grid-title">
+    <div class="container">
+      <div class="section-heading section-heading--left">
+        <span class="eyebrow">Available categories</span>
+        <h2 id="products-grid-title">Browse all product lines.</h2>
+      </div>
+
+      <div class="subcategory-grid">
+        {productGroups.map((group) => (
+          <article class="subcategory-card">
+            <img src={group.image} alt={group.title} class="subcategory-card__image" loading="lazy" decoding="async" width="1200" height="890" />
+            <div class="subcategory-card__content">
+              <h3 class="subcategory-card__title">{group.title}</h3>
+              <p class="subcategory-card__text">{group.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

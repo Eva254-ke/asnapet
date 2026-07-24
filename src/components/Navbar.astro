@@ -1,0 +1,72 @@
+---
+// src/components/Navbar.astro
+---
+
+<nav class="navbar" aria-label="Primary navigation">
+  <div class="navbar__announcement">
+    <div class="container navbar__announcement-inner">
+      <span>Free Nairobi delivery over KSh 2,000</span>
+      <a href="tel:+254707429706">Call +254 707 429706</a>
+    </div>
+  </div>
+
+  <div class="navbar__main">
+    <div class="container navbar__container">
+      <a href="/" class="navbar__logo" aria-label="Asnapet Treasures home">
+        <span class="navbar__brand-word navbar__brand-word--primary">Asnapet</span>
+        <span class="navbar__brand-word navbar__brand-word--accent">Treasures</span>
+      </a>
+
+      <ul class="navbar__links" aria-label="Main sections">
+        <li><a href="/#products">Products</a></li>
+        <li><a href="/#why-us">Why Us</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/household">Household</a></li>
+      </ul>
+
+      <div class="navbar__actions">
+        <a href="https://wa.me/254707429706?text=Hello,%20I%20would%20like%20to%20request%20a%20catalog" class="navbar__cta">Request Catalog</a>
+        <button class="navbar__mobile-toggle" id="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="navbar__mobile-menu" id="mobile-menu">
+    <div class="container">
+      <ul class="navbar__mobile-links">
+        <li><a href="/#products">Products</a></li>
+        <li><a href="/#why-us">Why Us</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/household">Household</a></li>
+        <li><a href="https://wa.me/254707429706?text=Hello,%20I%20would%20like%20to%20request%20a%20catalog">Request Catalog</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-label', 'Open menu');
+      });
+    });
+  });
+</script>
