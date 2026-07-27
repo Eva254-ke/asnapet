@@ -142,25 +142,50 @@
 
 @media (max-width: 720px) {
   .hero__container {
-    min-height: 580px;
-    padding: var(--space-16) 0 var(--space-16);
-  }
-  .hero__title {
-    row-gap: 0;
-  }
-  .hero__actions {
-    flex-direction: column;
+    min-height: 520px;
+    padding: var(--space-12) 0 var(--space-12);
   }
   .hero__content {
     text-align: left;
+  }
+  /* The desktop clamp bottoms out at 2.9rem, which is still oversized on a
+     360px phone — the wordmark ends up filling the screen before the subtitle
+     gets a look in. Rescale against the viewport for the mobile range only,
+     leaving the desktop ramp untouched. */
+  .hero__title {
+    row-gap: 0;
+    font-size: clamp(2.15rem, 9.5vw, 3.4rem);
+  }
+  .hero__subtitle {
+    margin-top: var(--space-4);
+    font-size: 1rem;
   }
   .hero__title,
   .hero__subtitle {
     justify-content: flex-start;
     margin-inline: 0;
   }
+  /* Two up rather than stacked. As full-width stacked bars the pair ate most
+     of a short phone screen and pushed the scroll cue below the fold; side by
+     side they read as one either/or decision and the hero keeps its shape. */
+  .hero__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+    margin-inline: 0;
+  }
   .hero__scroll {
     display: none;
+  }
+}
+
+/* Below ~420px the two tracks are ~140px wide, so the labels need to give up
+   some padding and a little type size to wrap cleanly into two lines. */
+@media (max-width: 420px) {
+  .hero__actions .btn {
+    padding-inline: var(--space-3);
+    font-size: 0.9rem;
   }
 }
 

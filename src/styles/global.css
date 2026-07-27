@@ -188,8 +188,11 @@ img {
   font-family: inherit;
   font-size: 1rem;
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.15;
   letter-spacing: -0.01em;
+  /* Narrow buttons wrap to two lines on phones; without this the label would
+     inherit the left alignment its container sets at that width. */
+  text-align: center;
   cursor: pointer;
   transition:
     transform var(--dur-fast) var(--ease-out),
@@ -230,6 +233,7 @@ img {
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   border-color: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 .btn-outline:hover {
@@ -250,13 +254,33 @@ img {
   box-shadow: var(--shadow-sm);
 }
 
-/* Arrow that nudges forward on hover */
+/* Arrow that nudges forward on hover. The bare rule stays in flow — inline
+   card links ("View range →") use it as a permanent affordance. */
 .btn__arrow {
   display: inline-block;
   transition: transform var(--dur-mid) var(--ease-out);
 }
-.btn:hover .btn__arrow {
-  transform: translateX(4px);
+
+/* Inside a button the arrow is withheld until the pointer arrives. It is taken
+   out of flow and parked in the button's own right padding, so revealing it
+   cannot change the button's width or shunt a neighbouring button sideways —
+   the label stays optically centred whether the arrow is showing or not.
+   Touch devices never hover, so it simply never appears there, which is what
+   the narrow two-up action row on phones wants anyway. */
+.btn .btn__arrow {
+  position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  opacity: 0;
+  transform: translate(-6px, -50%);
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-mid) var(--ease-out);
+}
+.btn:hover .btn__arrow,
+.btn:focus-visible .btn__arrow {
+  opacity: 1;
+  transform: translate(0, -50%);
 }
 
 /* ---------- Section furniture ---------- */
