@@ -1,0 +1,96 @@
+---
+/**
+ * Renders a category's photo, or a branded icon tile when no photo has been
+ * supplied yet.
+ *
+ * The fallback exists so the site can ship before the client's photography
+ * arrives without either (a) leaving broken image frames or (b) showing an
+ * unrelated stock photo, which would misrepresent the product. It is styled to
+ * look deliberate rather than unfinished. Set `image` on a category in
+ * categories.ts and this component switches to the real photo automatically.
+ */
+import { Image } from 'astro:assets';
+import type { PackIcon } from '../data/categories';
+
+interface Props {
+  icon: PackIcon;
+  image?: ImageMetadata;
+  alt?: string;
+  /** Class applied to the <img>, so existing card styles keep working. */
+  class?: string;
+  widths: number[];
+  sizes: string;
+  loading?: 'eager' | 'lazy';
+  /** Extra class on the fallback tile, for per-context sizing. */
+  tileClass?: string;
+}
+
+const {
+  icon,
+  image,
+  alt = '',
+  class: imgClass,
+  widths,
+  sizes,
+  loading = 'lazy',
+  tileClass,
+} = Astro.props;
+
+/**
+ * Callers ask for a fixed ladder of widths (240/400/600/800) sized for the
+ * card, but several supplied photos are smaller than the top of that ladder.
+ * Asking Astro for a variant wider than the source produces an upscale: a
+ * bigger file carrying no more detail. So cap the ladder at whichever is
+ * smaller — the source's own width, or the largest width the caller wanted —
+ * and keep every rung below it.
+ */
+const cap = image ? Math.min(image.width, Math.max(...widths)) : 0;
+const safeWidths = image ? [...new Set([...widths.filter((w) => w < cap), cap])] : widths;
+
+/**
+ * `width`/`height` pin the fallback `src` to the top of that ladder. Left to
+ * itself Astro points `src` at a full-size render — for the 1493px container
+ * photo that is a 142KB file that no browser ever requests, because a valid
+ * `srcset`/`sizes` pair always wins. It still gets built and deployed, so pin
+ * it. The height is derived to keep the source's aspect ratio, which is what
+ * reserves the right amount of layout space.
+ */
+const fallbackHeight = image ? Math.round((cap * image.height) / image.width) : undefined;
+
+/**
+ * Single-path glyphs, drawn on a 24x24 grid. Deliberately simple outlines so
+ * they stay legible at the ~40px size used on a two-up mobile card.
+ */
+const icons: Record<PackIcon, string> = {
+  container: 'M3 8h18l-1.2 10.2A2 2 0 0 1 17.8 20H6.2a2 2 0 0 1-2-1.8L3 8Zm2.3 2 .9 8h11.6l.9-8H5.3ZM2 5h20v2H2V5Z',
+  cup: 'M5 3h14l-1.1 3H6.1L5 3Zm1.4 5h11.2l-1.3 11.2A2 2 0 0 1 14.3 21H9.7a2 2 0 0 1-2-1.8L6.4 8Zm2.2 2 1 9h4.8l1-9H8.6Z',
+  bottle: 'M10 2h4v3.2l1.4 2.1A4 4 0 0 1 16 9.5V20a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9.5a4 4 0 0 1 .6-2.2L10 5.2V2Zm2 2v1.8L10.3 8.4A2 2 0 0 0 10 9.5V20h4V9.5a2 2 0 0 0-.3-1.1L12 5.8V4Z',
+  pouch: 'M6 2h12l1 4v13a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V6l1-4Zm1.6 2-.5 2h9.8l-.5-2H7.6ZM7 8v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8H7Zm2 3h6v2H9v-2Z',
+  bag: 'M7 7V6a5 5 0 0 1 10 0v1h3v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7h3Zm2 0h6V6a3 3 0 0 0-6 0v1ZM6 9v11h12V9H6Z',
+  carton: 'M3 6h18v4H3V6Zm1 6h16v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7Zm2 2v5h12v-5H6Zm3-10h6l1 2H8l1-2Z',
+  label: 'M4 4h9.2a2 2 0 0 1 1.4.6l6 6a2 2 0 0 1 0 2.8l-6.6 6.6a2 2 0 0 1-2.8 0l-6-6A2 2 0 0 1 4 12.2V4Zm2 2v6.2l6 6 6.2-6.2-6-6H6Zm2.5 1.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z',
+  cutlery: 'M6 2h2v7a2 2 0 0 1-1 1.7V22H5V10.7A2 2 0 0 1 4 9V2h2v7h.5V2ZM15 2h2a3 3 0 0 1 3 3v5a3 3 0 0 1-2 2.8V22h-2V12.8A3 3 0 0 1 14 10V5a3 3 0 0 1 1-3Zm1 2.2A1 1 0 0 0 16 5v5a1 1 0 0 0 2 0V5a1 1 0 0 0-1-.8h-1Z',
+};
+---
+
+{
+  image ? (
+    <Image
+      src={image}
+      alt={alt}
+      class={imgClass}
+      widths={safeWidths}
+      sizes={sizes}
+      width={cap}
+      height={fallbackHeight}
+      loading={loading}
+      decoding="async"
+    />
+  ) : (
+    <span class:list={['packshot', tileClass]} aria-hidden="true">
+      <svg class="packshot__icon" viewBox="0 0 24 24" focusable="false">
+        <path d={icons[icon]} fill="currentColor" />
+      </svg>
+    </span>
+  )
+}

@@ -1,6 +1,6 @@
 # Asnapet Treasures
 
-Astro website for Asnapet Treasures, a Nairobi-based supplier of household essentials, personal care goods, cleaning products, bedding, kitchen items, and agriculture-related products.
+Astro website for Asnapet Treasures, a Nairobi-based supplier of food and beverage packaging: takeaway containers, cups and lids, bottles and jars, pouches and films, paper bags, bakery cartons, labels and disposable cutlery — supplied plain or printed with the customer's branding.
 
 ## Tech Stack
 
@@ -11,8 +11,8 @@ Astro website for Asnapet Treasures, a Nairobi-based supplier of household essen
 ## Pages
 
 - `/` - main landing page
-- `/products` - product catalog overview
-- `/household` - household essentials category page
+- `/products` - full packaging catalog overview
+- `/takeaway-packaging` - takeaway range deep-dive page
 - `/404` - not-found page (excluded from the sitemap, `noindex`)
 
 ## Before going live: set the domain
@@ -43,7 +43,30 @@ Business facts are centralised so page copy and structured data cannot drift:
 - `src/data/site.ts` - contact details, address, geo coordinates, opening hours,
   service areas, WhatsApp message templates, and the FAQ questions (which are
   rendered on the page *and* emitted as `FAQPage` schema).
-- `src/data/categories.ts` - the product categories shared by `/` and `/products`.
+- `src/data/categories.ts` - the packaging categories shared by `/` and `/products`.
+
+## Adding the client's photos
+
+The site currently ships with **no product photography**. Rather than showing
+unrelated stock images, every photo slot falls back to a branded icon tile
+(`src/components/PackShot.astro`), so nothing on the page misrepresents what is
+being sold.
+
+To add a real photo:
+
+1. Drop the file in `src/assets/images/` (ideally ~1600px wide).
+2. Import it in the relevant file and set `image:` plus a descriptive `alt:`.
+
+Astro generates resized WebP variants with a `srcset` automatically. Lines
+without a photo keep their icon tile, so photos can be added one at a time.
+
+| Slot | File to edit |
+| --- | --- |
+| The 8 packaging categories | `src/data/categories.ts` |
+| Takeaway sub-lines | `src/pages/takeaway-packaging.astro` |
+| Hero background | `src/components/Hero.astro` (uncomment the marked block) |
+| About section | `src/components/About.astro` (uncomment the marked block) |
+| Social share card | replace `public/og-image.jpg` (must be 1200x630) |
 
 ## Development
 

@@ -1,13 +1,13 @@
 ---
-import { Image } from 'astro:assets';
 import Layout from '../layout/Layout.astro';
+import PackShot from '../components/PackShot.astro';
 import { categories, categoryNames } from '../data/categories';
 import { waLinks, business } from '../data/site';
 ---
 
 <Layout
-  title="All Products — Farm, Home & Shop Supplies"
-  description="Browse the full Asnapet Treasures range: farm inputs, household basics, cleaning and care, kitchen and dining, bedding and bath, appliances, storage and personal care. Supplied across Nairobi."
+  title="All Packaging — Containers, Cups, Bottles & Cartons"
+  description="Browse the full Asnapet Treasures packaging range: takeaway containers, cups and lids, bottles and jars, pouches and films, paper bags, bakery cartons, labels and disposable cutlery. Supplied across Nairobi, plain or custom-branded."
   itemList={categoryNames}
   breadcrumbs={[
     { name: 'Home', path: '/' },
@@ -19,15 +19,15 @@ import { waLinks, business } from '../data/site';
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <ol>
           <li><a href="/">Home</a></li>
-          <li aria-current="page">Products</li>
+          <li aria-current="page">Packaging</li>
         </ol>
       </nav>
 
-      <span class="eyebrow">Products</span>
-      <h1 class="category-header__title">All products for home, farm and shop supply.</h1>
+      <span class="eyebrow">Packaging</span>
+      <h1 class="category-header__title">Every packaging line, in one place.</h1>
       <p class="category-header__subtitle">
-        Browse the full product range in one place, then contact the team when you are ready to
-        confirm availability, pricing or delivery.
+        Containers, cups, bottles, pouches, bags, cartons, labels and cutlery for food and beverage
+        businesses. Tell us what you are packing and we will confirm sizes, grade and pricing.
       </p>
       <div class="category-header__actions">
         <a href={waLinks.fullCatalog} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
@@ -43,10 +43,10 @@ import { waLinks, business } from '../data/site';
     <div class="container">
       <div class="section-heading section-heading--left" data-reveal>
         <span class="eyebrow">Available categories</span>
-        <h2 id="products-grid-title">Browse all product lines.</h2>
+        <h2 id="products-grid-title">Browse all packaging lines.</h2>
         <p>
-          Every line below is supplied to order. Send your list and we will confirm what is currently
-          in stock before anything is charged.
+          Every line below is supplied to order, plain or printed with your branding. Send your list
+          and we will confirm what is currently in stock before anything is charged.
         </p>
       </div>
 
@@ -60,14 +60,15 @@ import { waLinks, business } from '../data/site';
               data-reveal-delay={String((index % 3) + 1)}
             >
               <div class="subcategory-card__media">
-                <Image
-                  src={group.image}
+                <PackShot
+                  icon={group.icon}
+                  image={group.image}
                   alt={group.alt}
                   class="subcategory-card__image"
                   widths={[240, 400, 600, 800]}
                   sizes="(max-width: 1080px) 50vw, 33vw"
                   loading={index < 2 ? 'eager' : 'lazy'}
-                  decoding="async"
+                  tileClass={index % 2 === 1 ? 'packshot--warm' : undefined}
                 />
               </div>
               <div class="subcategory-card__content">
@@ -89,8 +90,8 @@ import { waLinks, business } from '../data/site';
           Tell us what you need and we will source it.
         </h2>
         <p class="category-cta__text">
-          Our supplier network covers more than this page lists. Send your requirements and we will
-          confirm availability, pricing and delivery options.
+          Our supplier network covers more sizes and formats than this page lists, including custom
+          print runs. Send your requirements and we will confirm availability, pricing and lead time.
         </p>
         <a href={waLinks.quote} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
           Send your list on WhatsApp

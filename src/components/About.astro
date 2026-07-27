@@ -1,19 +1,24 @@
 ---
+/**
+ * The slot takes a warehouse or stockholding shot rather than a product close-up:
+ * the copy beside it is about supplier checks, records and dispatch, so racked
+ * stock says "we can actually supply this" in a way a single pack cannot.
+ */
 import { Image } from 'astro:assets';
-import aboutImage from '../assets/images/about-agriculture.jpg';
+import aboutImage from '../assets/images/pack-about-warehouse.webp';
 
 const facts = [
   {
     title: 'Supplier checks',
-    text: 'Products are sourced through trusted manufacturers and distributors.',
+    text: 'Packaging is sourced through established manufacturers and distributors.',
   },
   {
     title: 'Clear records',
-    text: 'Every confirmed purchase is handled with straightforward communication and receipts.',
+    text: 'Every confirmed order is handled with straightforward communication and receipts.',
   },
   {
     title: 'Delivery support',
-    text: 'Practical dispatch coordination for Nairobi households and businesses.',
+    text: 'Practical dispatch coordination for Nairobi kitchens, counters and processors.',
   },
 ];
 ---
@@ -23,8 +28,8 @@ const facts = [
     <div class="about__image-wrap" data-reveal>
       <Image
         src={aboutImage}
-        alt="Sunlit agricultural field with healthy crops in Kenya"
-        widths={[400, 640, 736]}
+        alt="Cartons and shrink-wrapped pallets racked on labelled warehouse shelving"
+        widths={[400, 640, 900]}
         sizes="(max-width: 980px) 100vw, 40vw"
         loading="lazy"
         decoding="async"
@@ -34,15 +39,15 @@ const facts = [
     <div class="about__content" data-reveal data-reveal-delay="1">
       <span class="eyebrow">About Asnapet</span>
       <h2 class="about__title" id="about-title">
-        A dependable sourcing partner for homes, farms and local operators.
+        A dependable packaging partner for Nairobi food businesses.
       </h2>
       <p class="about__text">
-        Asnapet Treasures is a registered Kenyan enterprise supplying agricultural inputs and
-        household essentials through verified supplier relationships.
+        Asnapet Treasures is a registered Kenyan enterprise supplying food and beverage packaging
+        through established manufacturer and distributor relationships.
       </p>
       <p class="about__text">
-        We keep the service practical: confirm what you need, share current availability, issue
-        receipts and coordinate delivery within Nairobi.
+        We keep the service practical: confirm what you are packing, recommend the right grade, quote
+        plain or branded options, issue receipts and coordinate delivery within Nairobi.
       </p>
 
       <div class="about__facts" aria-label="Business strengths">

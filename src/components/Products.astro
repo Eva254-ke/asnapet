@@ -1,33 +1,33 @@
 ---
-import { Image } from 'astro:assets';
+import PackShot from './PackShot.astro';
 import { categories } from '../data/categories';
 
 const strengths = [
   {
-    title: 'Local fit',
-    text: 'Products are selected for Nairobi homes, farms, kiosks and small operators.',
+    title: 'Branding included',
+    text: 'Your logo printed onto cups, bags, containers and labels, not just plain stock packaging.',
   },
   {
-    title: 'Stock clarity',
-    text: 'We confirm availability before you commit, so you know what can be supplied.',
+    title: 'Right grade, confirmed',
+    text: 'We check the packaging suits what you are actually packing — hot, oily, frozen or wet.',
   },
   {
-    title: 'Practical sourcing',
-    text: 'Supplier choices focus on useful quality, sensible pricing and repeat availability.',
+    title: 'Samples first',
+    text: 'Test size, sturdiness and fit with your own food before committing to a volume order.',
   },
 ];
 
-const trustPoints = ['Home', 'Farm', 'Shop'];
+const trustPoints = ['Restaurants', 'Cafes', 'Bakeries', 'Delis'];
 ---
 
 <section class="products section-lazy" id="products" aria-labelledby="products-title">
   <div class="container">
     <div class="section-heading" data-reveal>
-      <span class="eyebrow">Curated product lines</span>
-      <h2 id="products-title">Simple categories for everyday supply needs.</h2>
+      <span class="eyebrow">Packaging lines</span>
+      <h2 id="products-title">Everything your kitchen sends out the door.</h2>
       <p>
-        Focused lines for households, farms and small businesses, with product choices that feel
-        familiar to the local market.
+        Containers, cups, bottles, bags and cartons for food and beverage businesses across Nairobi —
+        supplied plain or printed with your own branding.
       </p>
     </div>
 
@@ -41,14 +41,15 @@ const trustPoints = ['Home', 'Farm', 'Shop'];
             data-reveal
             data-reveal-delay={String((index % 3) + 1)}
           >
-            <Image
-              src={category.image}
+            <PackShot
+              icon={category.icon}
+              image={category.image}
               alt={category.alt}
               class="category-showcase__image"
               widths={[240, 400, 600, 800]}
-              sizes="(max-width: 680px) 50vw, (max-width: 1080px) 50vw, 33vw"
+              sizes="(max-width: 1080px) 50vw, 33vw"
               loading={index < 2 ? 'eager' : 'lazy'}
-              decoding="async"
+              tileClass={index % 2 === 1 ? 'packshot--warm' : undefined}
             />
             <span class="category-showcase__overlay"></span>
             <span class="category-showcase__content">
@@ -67,7 +68,7 @@ const trustPoints = ['Home', 'Farm', 'Shop'];
 
     <div class="products__cta-row" data-reveal>
       <a class="btn btn-primary products__read-more" href="/products">
-        See all product lines
+        See all packaging lines
         <span class="btn__arrow" aria-hidden="true">&rarr;</span>
       </a>
     </div>
@@ -78,13 +79,13 @@ const trustPoints = ['Home', 'Farm', 'Shop'];
   <div class="container why-us__container">
     <div class="section-heading section-heading--left why-us__heading" data-reveal>
       <span class="eyebrow">Why choose us</span>
-      <h2 id="why-us-title">Practical local supply, made simple from first message to delivery.</h2>
+      <h2 id="why-us-title">Packaging that fits your food and carries your name.</h2>
       <p>
-        Talk to a real person, get clear stock updates and choose products that suit your home, farm
-        or business without a complicated checkout process.
+        Talk to a real person, get the grade checked against what you are packing, and order plain or
+        custom-printed packaging without working through a complicated checkout.
       </p>
 
-      <div class="why-us__proof" aria-label="Supply focus areas">
+      <div class="why-us__proof" aria-label="Businesses we supply">
         {trustPoints.map((point) => <span>{point}</span>)}
       </div>
     </div>

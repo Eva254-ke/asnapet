@@ -8,7 +8,11 @@
   isolation: isolate;
 }
 
-/* The photo itself, sized to cover the section */
+/* The photo itself, sized to cover the section. Left sharp on purpose: the
+   packaging is the message, and softening it to disguise the upscale hid the
+   product along with the pixels. The source is a 474px square stretched across
+   a viewport-wide panel, so expect visible softness at large widths — a wider
+   photograph is the fix, not a filter. See Hero.astro. */
 .hero__image {
   position: absolute;
   inset: 0;
@@ -16,7 +20,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  /* Biased above centre so the pouches stay in frame on a wide viewport rather
+     than drifting toward the plain lower band. */
+  object-position: center 40%;
   /* Slight overscale hides edge artefacts from the gradient blend */
   transform: scale(1.03);
 }
@@ -43,6 +49,33 @@
   background:
     radial-gradient(ellipse 55% 45% at 50% 42%, rgba(31, 107, 69, 0.32), transparent 70%),
     radial-gradient(ellipse 40% 35% at 82% 78%, rgba(244, 191, 87, 0.14), transparent 70%);
+}
+
+/* No-photo variant, used until the client supplies hero photography. The scrim
+   carries the full background instead of merely darkening an image, so the
+   section still reads as a deliberate brand panel rather than a blank box.
+   Adding a photo and dropping `hero--plain` restores the original treatment. */
+.hero--plain .hero__media {
+  background:
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 16px),
+    linear-gradient(160deg, #125034 0%, var(--color-primary-dark) 42%, var(--color-primary-deep) 100%);
+}
+.hero--plain .hero__glow {
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 38%, rgba(45, 138, 90, 0.45), transparent 72%),
+    radial-gradient(ellipse 45% 40% at 84% 82%, rgba(244, 191, 87, 0.16), transparent 72%),
+    radial-gradient(ellipse 40% 36% at 12% 88%, rgba(31, 107, 69, 0.4), transparent 70%);
+}
+
+/* Standfirst between the wordmark and the paragraph: states the category
+   plainly, which the wordmark alone does not. */
+.hero__tagline {
+  margin: var(--space-4) auto 0;
+  color: var(--color-secondary-light);
+  font-family: 'Rubik', system-ui, sans-serif;
+  font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .hero__container {
@@ -160,7 +193,12 @@
     margin-top: var(--space-4);
     font-size: 1rem;
   }
+  .hero__tagline {
+    margin-top: var(--space-3);
+    font-size: 0.95rem;
+  }
   .hero__title,
+  .hero__tagline,
   .hero__subtitle {
     justify-content: flex-start;
     margin-inline: 0;

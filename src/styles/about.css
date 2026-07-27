@@ -88,8 +88,14 @@
   .about__facts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  /* Stacked, the wrap spans the full container, where the portrait 5/6 ratio
+     would stand over 1000px tall. `max-height` cannot cap that: against an
+     aspect-ratio the browser honours the ratio and shrinks the *width* to
+     match, which stranded the photo as a 433px card in an 868px column with
+     the offset frame poking out beside it. Widen the ratio instead — the box
+     keeps its full width and lands at roughly the 520px the cap intended. */
   .about__image-wrap {
-    max-height: 520px;
+    aspect-ratio: 5 / 3;
   }
 }
 

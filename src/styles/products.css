@@ -8,6 +8,36 @@
   gap: var(--space-5);
 }
 
+/* ---------- Filling the last row on desktop ----------
+   Eight lines into three columns leaves the final row two-thirds full, with a
+   dead third where a tile should be. Rather than hide the stragglers (which is
+   fine on a phone, where a tile is small, but throws away a whole product line
+   on a desktop where it is a large card) the grid runs on six narrow tracks and
+   each tile normally spans two of them — visually identical to three columns.
+   That divisibility is what lets an incomplete last row be rebalanced: two
+   leftovers take three tracks each, a lone leftover takes all six. The result
+   is a flush block at any count.
+
+   Scoped to min-width so it cannot interfere with the 2-up rules below, which
+   would otherwise fight these span declarations on specificity. */
+@media (min-width: 1081px) {
+  .products__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .products__grid > * {
+    grid-column: span 2;
+  }
+  /* `:nth-child(3n+1)` is the first tile of a row; pairing it with
+     `:nth-last-child(2)` matches only when that row holds the final two. */
+  .products__grid > :nth-child(3n + 1):nth-last-child(2),
+  .products__grid > :nth-child(3n + 1):nth-last-child(2) ~ * {
+    grid-column: span 3;
+  }
+  .products__grid > :nth-child(3n + 1):last-child {
+    grid-column: span 6;
+  }
+}
+
 .category-showcase {
   position: relative;
   min-height: 430px;

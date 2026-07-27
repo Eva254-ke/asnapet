@@ -1,0 +1,7 @@
+# Redirects for Cloudflare Workers static assets. Served from dist/ at the edge.
+#
+# The household-essentials page became the takeaway-packaging page when the site
+# was repositioned around food & beverage packaging. That old URL was already
+# live, so it is redirected rather than left to 404 — this preserves any existing
+# links, bookmarks and accumulated search ranking.
+/household /takeaway-packaging 301

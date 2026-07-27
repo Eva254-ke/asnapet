@@ -3,8 +3,8 @@ import { business, waLinks } from '../data/site';
 
 const navLinks = [
   { label: 'Home', href: '/' },
-  { label: 'All products', href: '/products' },
-  { label: 'Household essentials', href: '/household' },
+  { label: 'All packaging', href: '/products' },
+  { label: 'Takeaway packaging', href: '/takeaway-packaging' },
   { label: 'Why choose us', href: '/#why-us' },
   { label: 'About us', href: '/#about' },
   { label: 'FAQ', href: '/#faq' },
@@ -19,7 +19,8 @@ const navLinks = [
         <span class="site-footer__brand-accent">Treasures</span>
       </a>
       <p class="site-footer__text">
-        Registered Kenyan supplier of farm inputs, household essentials and practical daily goods.
+        Registered Kenyan supplier of food and beverage packaging &mdash; plain or printed with your
+        own branding.
       </p>
       <a class="site-footer__wa" href={waLinks.catalog} target="_blank" rel="noopener noreferrer">
         <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
@@ -59,6 +60,8 @@ const navLinks = [
 
   <div class="container site-footer__bottom">
     <p>&copy; {new Date().getFullYear()} {business.legalName}. All rights reserved.</p>
-    <p class="site-footer__built">Farm inputs &amp; household essentials, supplied across Nairobi.</p>
+    {/* Read from site.ts rather than hardcoded — this line had been left saying
+        "farm inputs & household essentials" after the rest of the site moved on. */}
+    <p class="site-footer__built">{business.tagline}.</p>
   </div>
 </footer>
