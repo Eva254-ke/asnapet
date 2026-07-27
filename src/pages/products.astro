@@ -1,85 +1,101 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layout/Layout.astro';
-
-const productGroups = [
-  {
-    title: 'Farm Inputs',
-    text: 'Seeds, fertilizers, feeds, sprayers and practical tools for small and medium farms.',
-    image: '/images/products-agriculture.jpg'
-  },
-  {
-    title: 'Household Basics',
-    text: 'Kitchenware, cleaning items, storage solutions and day-to-day home essentials.',
-    image: '/images/products-household.webp'
-  },
-  {
-    title: 'Shop Supplies',
-    text: 'Bulk consumables and mixed supply lines for kiosks, offices and local resellers.',
-    image: '/images/products-bulk-supply.webp'
-  },
-  {
-    title: 'Cleaning & Care',
-    text: 'Laundry detergents, cleaning equipment and practical household care products.',
-    image: '/images/products-cleaning.jpg'
-  },
-  {
-    title: 'Kitchen & Dining',
-    text: 'Cookware, utensils, serving pieces and food storage items for the modern home.',
-    image: '/images/products-kitchen-dining.jpg'
-  },
-  {
-    title: 'Bedding & Bath',
-    text: 'Bedsheets, towels and bathroom essentials selected for comfort and durability.',
-    image: '/images/products-bedding-bath.jpg'
-  },
-  {
-    title: 'Home Appliances',
-    text: 'Electric kettles, blenders, irons and handy appliances for smoother home routines.',
-    image: '/images/products-home-appliances.png'
-  },
-  {
-    title: 'Storage & Organization',
-    text: 'Storage containers, organizers and space-saving items for tidier homes and shops.',
-    image: 'https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80'
-  },
-  {
-    title: 'Personal Care',
-    text: 'Bath, grooming and personal care basics for families, offices and small retailers.',
-    image: '/images/products-personal-care.jpg'
-  }
-];
+import { categories, categoryNames } from '../data/categories';
+import { waLinks, business } from '../data/site';
 ---
 
-<Layout title="Products" description="Browse the full Asnapet Treasures product range, including farm inputs, household basics, shop supplies and more.">
+<Layout
+  title="All Products — Farm, Home & Shop Supplies"
+  description="Browse the full Asnapet Treasures range: farm inputs, household basics, cleaning and care, kitchen and dining, bedding and bath, appliances, storage and personal care. Supplied across Nairobi."
+  itemList={categoryNames}
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Products', path: '/products' },
+  ]}
+>
   <section class="category-header">
     <div class="container category-header__container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li aria-current="page">Products</li>
+        </ol>
+      </nav>
+
       <span class="eyebrow">Products</span>
       <h1 class="category-header__title">All products for home, farm and shop supply.</h1>
       <p class="category-header__subtitle">
-        Browse the full product range in one place, then contact the team when you are ready to confirm availability, pricing or delivery.
+        Browse the full product range in one place, then contact the team when you are ready to
+        confirm availability, pricing or delivery.
       </p>
-      <a href="https://wa.me/254707429706?text=Hello,%20I%20would%20like%20the%20full%20product%20catalog." class="btn btn-primary">Request Full Catalog</a>
+      <div class="category-header__actions">
+        <a href={waLinks.fullCatalog} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          Request Full Catalog
+          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a href={`tel:${business.phone}`} class="btn btn-ghost">Call {business.phoneDisplay}</a>
+      </div>
     </div>
   </section>
 
   <section class="category-content section-lazy" aria-labelledby="products-grid-title">
     <div class="container">
-      <div class="section-heading section-heading--left">
+      <div class="section-heading section-heading--left" data-reveal>
         <span class="eyebrow">Available categories</span>
         <h2 id="products-grid-title">Browse all product lines.</h2>
+        <p>
+          Every line below is supplied to order. Send your list and we will confirm what is currently
+          in stock before anything is charged.
+        </p>
       </div>
 
       <div class="subcategory-grid">
-        {productGroups.map((group) => (
-          <article class="subcategory-card">
-            <img src={group.image} alt={group.title} class="subcategory-card__image" loading="lazy" decoding="async" width="1200" height="890" />
-            <div class="subcategory-card__content">
-              <h3 class="subcategory-card__title">{group.title}</h3>
-              <p class="subcategory-card__text">{group.text}</p>
-            </div>
-          </article>
-        ))}
+        {
+          categories.map((group, index) => (
+            <a
+              class="subcategory-card"
+              href={group.href}
+              data-reveal
+              data-reveal-delay={String((index % 3) + 1)}
+            >
+              <div class="subcategory-card__media">
+                <Image
+                  src={group.image}
+                  alt={group.alt}
+                  class="subcategory-card__image"
+                  widths={[240, 400, 600, 800]}
+                  sizes="(max-width: 1080px) 50vw, 33vw"
+                  loading={index < 2 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+              </div>
+              <div class="subcategory-card__content">
+                <h3 class="subcategory-card__title">{group.title}</h3>
+                <p class="subcategory-card__text">{group.detail}</p>
+                <span class="subcategory-card__link">
+                  Enquire
+                  <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+                </span>
+              </div>
+            </a>
+          ))
+        }
       </div>
+
+      <section class="category-cta" aria-labelledby="products-cta-title">
+        <span class="eyebrow">Not listed above?</span>
+        <h2 class="category-cta__title" id="products-cta-title">
+          Tell us what you need and we will source it.
+        </h2>
+        <p class="category-cta__text">
+          Our supplier network covers more than this page lists. Send your requirements and we will
+          confirm availability, pricing and delivery options.
+        </p>
+        <a href={waLinks.quote} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+          Send your list on WhatsApp
+        </a>
+      </section>
     </div>
   </section>
 </Layout>

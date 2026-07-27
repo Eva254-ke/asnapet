@@ -1,85 +1,119 @@
 ---
-// src/pages/household.astro
+import { Image } from 'astro:assets';
 import Layout from '../layout/Layout.astro';
+import { waLinks, business } from '../data/site';
 
-const whatsappLink = 'https://wa.me/254707429706?text=Hello,%20I%20am%20interested%20in%20your%20Household%20Essentials%20catalog.';
+import householdHero from '../assets/images/products-household.webp';
+import kitchenDining from '../assets/images/products-kitchen-dining.jpg';
+import homeAppliances from '../assets/images/products-home-appliances.png';
+import cleaning from '../assets/images/products-cleaning.jpg';
+import beddingBath from '../assets/images/products-bedding-bath.jpg';
+import storage from '../assets/images/products-storage-organization.webp';
+import personalCare from '../assets/images/products-personal-care.jpg';
 
-const heroHighlights = [
-  'Kitchenware',
-  'Cleaning supplies',
-  'Appliances',
-  'Bedding & bath'
-];
+const heroHighlights = ['Kitchenware', 'Cleaning supplies', 'Appliances', 'Bedding & bath'];
 
 const subcategories = [
   {
     title: 'Kitchen & Dining',
     description: 'Cookware, utensils, storage containers and dining essentials for everyday meals.',
-    image: '/images/products-kitchen-dining.jpg',
-    items: ['Cookware sets', 'Serving pieces', 'Food storage']
+    image: kitchenDining,
+    alt: 'Cookware and dining utensils arranged for everyday meals',
+    items: ['Cookware sets', 'Serving pieces', 'Food storage'],
   },
   {
     title: 'Home Appliances',
     description: 'Electric kettles, blenders, irons and reliable tools that make home routines easier.',
-    image: '/images/products-home-appliances.png',
-    items: ['Kettles', 'Blenders', 'Irons']
+    image: homeAppliances,
+    alt: 'Electric kettle, blender and iron for daily household routines',
+    items: ['Kettles', 'Blenders', 'Irons'],
   },
   {
     title: 'Cleaning Supplies',
     description: 'Detergents, mops, brooms and organizers for clean, efficient spaces.',
-    image: '/images/products-cleaning.jpg',
-    items: ['Detergents', 'Mops & brooms', 'Organizers']
+    image: cleaning,
+    alt: 'Detergents, mops and brooms for household cleaning',
+    items: ['Detergents', 'Mops & brooms', 'Organizers'],
   },
   {
     title: 'Bedding & Bath',
     description: 'Bedsheets, towels and bathroom basics selected for comfort and daily durability.',
-    image: '/images/products-bedding-bath.jpg',
-    items: ['Bedsheets', 'Towels', 'Bathroom basics']
+    image: beddingBath,
+    alt: 'Folded bedsheets and towels for bedroom and bathroom use',
+    items: ['Bedsheets', 'Towels', 'Bathroom basics'],
   },
   {
     title: 'Storage & Organization',
     description: 'Bins, baskets, racks and containers that help homes and small shops stay orderly.',
-    image: '/images/products-bulk-supply.webp',
-    items: ['Storage bins', 'Baskets', 'Shelving helpers']
+    image: storage,
+    alt: 'Storage bins and baskets used to keep a home organised',
+    items: ['Storage bins', 'Baskets', 'Shelving helpers'],
   },
   {
     title: 'Personal Care',
     description: 'Practical bath, grooming and wellness basics for family and workplace needs.',
-    image: '/images/products-personal-care.jpg',
-    items: ['Grooming basics', 'Bath care', 'Daily wellness']
-  }
+    image: personalCare,
+    alt: 'Bath and grooming personal care basics for family use',
+    items: ['Grooming basics', 'Bath care', 'Daily wellness'],
+  },
 ];
 
 const serviceSteps = [
   { title: 'Send your list', text: 'Share the household items you need, even if the list is mixed.' },
   { title: 'Confirm stock', text: 'We check availability and suggest practical alternatives where needed.' },
-  { title: 'Arrange supply', text: 'Get clear next steps for pricing, pickup or delivery support.' }
+  { title: 'Arrange supply', text: 'Get clear next steps for pricing, pickup or delivery support.' },
 ];
 ---
 
-<Layout title="Household Essentials" description="Explore household essentials from Asnapet Treasures, including kitchenware, cleaning supplies, appliances, bedding and bath items.">
+<Layout
+  title="Household Essentials in Nairobi — Kitchen, Cleaning & Appliances"
+  description="Household essentials from Asnapet Treasures: kitchenware, cleaning supplies, appliances, bedding, bath and storage. Supplied across Nairobi with stock confirmed before you pay."
+  itemList={subcategories.map((s) => s.title)}
+  breadcrumbs={[
+    { name: 'Home', path: '/' },
+    { name: 'Household Essentials', path: '/household' },
+  ]}
+>
   <header class="category-header category-header--household">
     <div class="container category-header__container household-hero">
       <div class="household-hero__copy">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li aria-current="page">Household Essentials</li>
+          </ol>
+        </nav>
+
         <span class="eyebrow">Household catalog</span>
         <h1 class="category-header__title">Practical essentials for a better-run home.</h1>
         <p class="category-header__subtitle">
-          Order kitchenware, cleaning supplies, appliances, storage items and comfort basics with direct WhatsApp support and availability checks before you commit.
+          Order kitchenware, cleaning supplies, appliances, storage items and comfort basics with
+          direct WhatsApp support and availability checks before you commit.
         </p>
         <div class="household-hero__actions">
-          <a href={whatsappLink} class="btn btn-primary">Request Household Catalog</a>
-          <a href="#household-sections" class="btn btn-secondary">Browse Categories</a>
+          <a href={waLinks.household} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            Request Household Catalog
+            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <a href="#household-sections" class="btn btn-ghost">Browse Categories</a>
         </div>
       </div>
 
       <div class="household-hero__visual" aria-label="Featured household essentials">
-        <img src="/images/products-household.webp" alt="Kitchen and household essentials arranged on a counter" class="household-hero__image" width="1200" height="900" />
+        <Image
+          src={householdHero}
+          alt="Kitchen and household essentials arranged on a counter"
+          class="household-hero__image"
+          widths={[400, 640, 900]}
+          sizes="(max-width: 980px) 100vw, 42vw"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
         <div class="household-hero__panel">
           <span>Popular lines</span>
           <div class="household-hero__chips">
-            {heroHighlights.map((item) => (
-              <span>{item}</span>
-            ))}
+            {heroHighlights.map((item) => <span>{item}</span>)}
           </div>
         </div>
       </div>
@@ -88,51 +122,77 @@ const serviceSteps = [
 
   <section class="category-content section-lazy household-content" aria-labelledby="household-sections">
     <div class="container">
-      <div class="section-heading section-heading--left household-heading">
+      <div class="section-heading section-heading--left household-heading" data-reveal>
         <span class="eyebrow">Available lines</span>
         <h2 id="household-sections">Household products grouped for faster ordering.</h2>
-        <p>Browse the main categories, then send the list you need so the team can confirm what is currently available.</p>
+        <p>
+          Browse the main categories, then send the list you need so the team can confirm what is
+          currently available.
+        </p>
       </div>
 
       <div class="subcategory-grid subcategory-grid--household">
-        {subcategories.map((sub) => (
-          <article class="subcategory-card household-card">
-            <img src={sub.image} alt={`${sub.title} products`} class="subcategory-card__image" loading="lazy" decoding="async" width="1000" height="760" />
-            <div class="subcategory-card__content household-card__content">
-              <span class="household-card__label">Household line</span>
-              <h3 class="subcategory-card__title">{sub.title}</h3>
-              <p class="subcategory-card__text">{sub.description}</p>
-              <div class="household-card__items" aria-label={`${sub.title} examples`}>
-                {sub.items.map((item) => (
-                  <span>{item}</span>
-                ))}
+        {
+          subcategories.map((sub, index) => (
+            <article
+              class="subcategory-card household-card"
+              data-reveal
+              data-reveal-delay={String((index % 3) + 1)}
+            >
+              <div class="subcategory-card__media">
+                <Image
+                  src={sub.image}
+                  alt={sub.alt}
+                  class="subcategory-card__image"
+                  widths={[240, 400, 600, 800]}
+                  sizes="(max-width: 1080px) 50vw, 33vw"
+                  loading={index < 2 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
               </div>
-            </div>
-          </article>
-        ))}
+              <div class="subcategory-card__content household-card__content">
+                <span class="household-card__label">Household line</span>
+                <h3 class="subcategory-card__title">{sub.title}</h3>
+                <p class="subcategory-card__text">{sub.description}</p>
+                <div class="household-card__items" aria-label={`${sub.title} examples`}>
+                  {sub.items.map((item) => <span>{item}</span>)}
+                </div>
+              </div>
+            </article>
+          ))
+        }
       </div>
 
       <section class="household-service" aria-labelledby="household-service-title">
-        <div class="section-heading section-heading--left household-service__heading">
+        <div class="section-heading section-heading--left household-service__heading" data-reveal>
           <span class="eyebrow">How it works</span>
           <h2 id="household-service-title">A simple way to source mixed household needs.</h2>
         </div>
         <div class="household-service__steps">
-          {serviceSteps.map((step, index) => (
-            <article class="household-step">
-              <span class="household-step__number">0{index + 1}</span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </article>
-          ))}
+          {
+            serviceSteps.map((step, index) => (
+              <article class="household-step" data-reveal data-reveal-delay={String(index + 1)}>
+                <span class="household-step__number">0{index + 1}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </article>
+            ))
+          }
         </div>
       </section>
 
       <section class="category-cta category-cta--household" aria-labelledby="category-cta-title">
         <span class="eyebrow">Need something specific?</span>
-        <h2 class="category-cta__title" id="category-cta-title">Send your list and we will confirm availability.</h2>
-        <p class="category-cta__text">Our catalog is updated regularly. We can check current stock, pricing and suitable delivery options for household, office and small shop needs.</p>
-        <a href={whatsappLink} class="btn btn-secondary">Chat on WhatsApp</a>
+        <h2 class="category-cta__title" id="category-cta-title">
+          Send your list and we will confirm availability.
+        </h2>
+        <p class="category-cta__text">
+          Our catalog is updated regularly. We can check current stock, pricing and suitable delivery
+          options for household, office and small shop needs. Free delivery on orders over {business.freeDeliveryThreshold} within Nairobi.
+        </p>
+        <a href={waLinks.household} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+          Chat on WhatsApp
+        </a>
       </section>
     </div>
   </section>

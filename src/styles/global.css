@@ -1,0 +1,433 @@
+/* Fonts are loaded non-blocking from Layout.astro — deliberately not @import'ed
+   here, since an @import inside CSS delays the font request until the CSS
+   has itself been fetched and parsed. */
+
+:root {
+  /* Surfaces — warm paper tones that suit the agricultural brand */
+  --color-bg: #f7f4ec;
+  --color-bg-deep: #efeadd;
+  --color-surface: #fffdf7;
+  --color-surface-strong: #ffffff;
+
+  /* Ink */
+  --color-ink: #17221c;
+  --color-ink-soft: #2c3a31;
+  --color-muted: #5d6a61;
+
+  /* Brand */
+  --color-primary: #1f6b45;
+  --color-primary-dark: #14452e;
+  --color-primary-deep: #0c2a1c;
+  --color-primary-soft: #e7f0e9;
+  --color-secondary: #b8772a;
+  --color-secondary-dark: #8a541a;
+  --color-secondary-light: #f4bf57;
+  /* Darker ochre reserved for white text on a solid fill. Plain
+     --color-secondary only reaches 3.7:1 against white, which fails WCAG AA. */
+  --color-secondary-on-dark: #965c1b;
+
+  --color-border: #ded6c6;
+  --color-border-soft: #e9e2d5;
+  --color-tint: #eaf2e8;
+
+  /* Layered elevation — consistent steps rather than ad-hoc shadows */
+  --shadow-xs: 0 1px 2px rgba(23, 34, 28, 0.06);
+  --shadow-sm: 0 2px 4px rgba(23, 34, 28, 0.05), 0 4px 12px rgba(23, 34, 28, 0.05);
+  --shadow-md: 0 4px 8px rgba(23, 34, 28, 0.05), 0 12px 28px rgba(23, 34, 28, 0.08);
+  --shadow-lg: 0 8px 16px rgba(23, 34, 28, 0.06), 0 24px 56px rgba(23, 34, 28, 0.11);
+  --shadow-xl: 0 16px 32px rgba(23, 34, 28, 0.08), 0 40px 88px rgba(23, 34, 28, 0.14);
+
+  /* Aliases kept so pre-existing rules keep resolving */
+  --shadow-soft: var(--shadow-lg);
+  --shadow-card: var(--shadow-md);
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  --container-width: 1180px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Motion — one easing curve everywhere, for a coherent feel */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-mid: 280ms;
+  --dur-slow: 620ms;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(31, 107, 69, 0.07), transparent 70%),
+    linear-gradient(180deg, rgba(255, 253, 247, 0.94) 0%, rgba(247, 244, 236, 0.96) 48%, rgba(234, 242, 232, 0.7) 100%),
+    repeating-linear-gradient(135deg, rgba(31, 107, 69, 0.03) 0 1px, transparent 1px 22px);
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Rubik', system-ui, sans-serif;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--color-ink);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.container {
+  width: min(100% - 32px, var(--container-width));
+  margin-inline: auto;
+}
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 999;
+  transform: translateY(-150%);
+  background: var(--color-ink);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: var(--radius-xs);
+  font-weight: 700;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 14px 24px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-mid) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn:active {
+  transform: translateY(0);
+  transition-duration: 60ms;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(20, 69, 46, 0.22);
+}
+.btn-primary:hover {
+  background: var(--color-primary-dark);
+  box-shadow: 0 10px 28px rgba(20, 69, 46, 0.3);
+}
+
+.btn-secondary {
+  background: var(--color-secondary-on-dark);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(138, 84, 26, 0.22);
+}
+.btn-secondary:hover {
+  background: #7d4b16;
+  box-shadow: 0 10px 28px rgba(138, 84, 26, 0.3);
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+}
+.btn-outline:hover {
+  background: #fff;
+  color: var(--color-primary-dark);
+  border-color: #fff;
+}
+
+/* Light-surface button, for use on paper backgrounds */
+.btn-ghost {
+  background: var(--color-surface-strong);
+  color: var(--color-primary-dark);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-xs);
+}
+.btn-ghost:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Arrow that nudges forward on hover */
+.btn__arrow {
+  display: inline-block;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+.btn:hover .btn__arrow {
+  transform: translateX(4px);
+}
+
+/* ---------- Section furniture ---------- */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-secondary-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.section-heading {
+  max-width: 760px;
+  margin: 0 auto var(--space-12);
+  text-align: center;
+}
+.section-heading--left {
+  margin-inline: 0;
+  text-align: left;
+}
+.section-heading h2 {
+  margin-top: var(--space-4);
+  font-size: clamp(1.9rem, 4vw, 3.1rem);
+}
+.section-heading p {
+  margin-top: var(--space-4);
+  color: var(--color-muted);
+  font-size: 1.08rem;
+}
+
+/* Thin rule for separating stacked sections */
+.section-divider {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+.section-lazy {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+  scroll-margin-top: 120px;
+}
+
+/* ---------- Reveal on scroll ---------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+}
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger members of a revealed group */
+[data-reveal-delay='1'] { transition-delay: 60ms; }
+[data-reveal-delay='2'] { transition-delay: 120ms; }
+[data-reveal-delay='3'] { transition-delay: 180ms; }
+[data-reveal-delay='4'] { transition-delay: 240ms; }
+[data-reveal-delay='5'] { transition-delay: 300ms; }
+[data-reveal-delay='6'] { transition-delay: 360ms; }
+
+@media (max-width: 720px) {
+  .container {
+    width: min(100% - 24px, var(--container-width));
+  }
+  .btn {
+    width: 100%;
+  }
+  .section-heading {
+    text-align: left;
+    margin-bottom: var(--space-8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  .btn:hover {
+    transform: none;
+  }
+}
+
+/* ---------- Floating WhatsApp button ---------- */
+
+.whatsapp-float {
+  position: fixed;
+  right: clamp(16px, 3vw, 28px);
+  bottom: clamp(16px, 3vw, 28px);
+  z-index: 120;
+  width: 58px;
+  height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4), 0 2px 8px rgba(23, 34, 28, 0.2);
+  transition:
+    transform var(--dur-mid) var(--ease-out),
+    box-shadow var(--dur-mid) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+/* Pulse ring draws the eye without moving the button itself */
+.whatsapp-float::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(37, 211, 102, 0.6);
+  animation: wa-pulse 2.6s var(--ease-out) infinite;
+}
+
+@keyframes wa-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  70% { transform: scale(1.45); opacity: 0; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+
+.whatsapp-float:hover {
+  transform: translateY(-3px) scale(1.04);
+  background: #1ebc59;
+  box-shadow: 0 14px 34px rgba(37, 211, 102, 0.48), 0 4px 12px rgba(23, 34, 28, 0.24);
+}
+.whatsapp-float svg {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .whatsapp-float {
+    width: 54px;
+    height: 54px;
+  }
+  .whatsapp-float svg {
+    width: 30px;
+    height: 30px;
+  }
+}

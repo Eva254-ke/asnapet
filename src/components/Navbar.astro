@@ -1,34 +1,57 @@
 ---
-// src/components/Navbar.astro
+import { business, waLinks } from '../data/site';
+
+const links = [
+  { label: 'Products', href: '/#products' },
+  { label: 'Why Us', href: '/#why-us' },
+  { label: 'Household', href: '/household' },
+  { label: 'About', href: '/#about' },
+  { label: 'FAQ', href: '/#faq' },
+];
 ---
 
-<nav class="navbar" aria-label="Primary navigation">
+<nav class="navbar" id="site-nav" aria-label="Primary navigation">
   <div class="navbar__announcement">
     <div class="container navbar__announcement-inner">
-      <span>Free Nairobi delivery over KSh 2,000</span>
-      <a href="tel:+254707429706">Call +254 707 429706</a>
+      <span>Free Nairobi delivery over {business.freeDeliveryThreshold}</span>
+      <a href={`tel:${business.phone}`}>Call {business.phoneDisplay}</a>
     </div>
   </div>
 
   <div class="navbar__main">
     <div class="container navbar__container">
-      <a href="/" class="navbar__logo" aria-label="Asnapet Treasures home">
+      <a href="/" class="navbar__logo" aria-label={`${business.name} home`}>
         <span class="navbar__brand-word navbar__brand-word--primary">Asnapet</span>
         <span class="navbar__brand-word navbar__brand-word--accent">Treasures</span>
       </a>
 
-      <ul class="navbar__links" aria-label="Main sections">
-        <li><a href="/#products">Products</a></li>
-        <li><a href="/#why-us">Why Us</a></li>
-        <li><a href="/#about">About</a></li>
-        <li><a href="/household">Household</a></li>
+      <ul class="navbar__links">
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
       </ul>
 
       <div class="navbar__actions">
-        <a href="https://wa.me/254707429706?text=Hello,%20I%20would%20like%20to%20request%20a%20catalog" class="navbar__cta">Request Catalog</a>
-        <button class="navbar__mobile-toggle" id="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <a href={waLinks.catalog} class="navbar__cta" target="_blank" rel="noopener noreferrer">
+          Request Catalog
+        </a>
+        <button
+          class="navbar__mobile-toggle"
+          id="mobile-menu-btn"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg class="navbar__icon-open" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
             <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <svg class="navbar__icon-close" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </button>
       </div>
@@ -38,35 +61,73 @@
   <div class="navbar__mobile-menu" id="mobile-menu">
     <div class="container">
       <ul class="navbar__mobile-links">
-        <li><a href="/#products">Products</a></li>
-        <li><a href="/#why-us">Why Us</a></li>
-        <li><a href="/#about">About</a></li>
-        <li><a href="/household">Household</a></li>
-        <li><a href="https://wa.me/254707429706?text=Hello,%20I%20would%20like%20to%20request%20a%20catalog">Request Catalog</a></li>
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={waLinks.catalog} target="_blank" rel="noopener noreferrer">Request Catalog</a>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
+  const nav = document.getElementById('site-nav');
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
 
-    if (!btn || !menu) return;
+  if (btn && menu) {
+    const setOpen = (open: boolean) => {
+      menu.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      // Prevent the page scrolling behind the open panel.
+      document.body.classList.toggle('has-menu-open', open);
+    };
 
     btn.addEventListener('click', () => {
-      const isOpen = menu.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', String(isOpen));
-      btn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+      setOpen(!menu.classList.contains('is-open'));
     });
 
     menu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        menu.classList.remove('is-open');
-        btn.setAttribute('aria-expanded', 'false');
-        btn.setAttribute('aria-label', 'Open menu');
-      });
+      link.addEventListener('click', () => setOpen(false));
     });
-  });
+
+    // Escape closes the panel and returns focus to the toggle.
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.classList.contains('is-open')) {
+        setOpen(false);
+        btn.focus();
+      }
+    });
+
+    // Close when the viewport grows past the breakpoint that hides the toggle,
+    // otherwise the panel stays open but invisible and traps focus.
+    const desktop = window.matchMedia('(min-width: 820px)');
+    desktop.addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+
+  // Condense the navbar once the user scrolls past the announcement bar.
+  if (nav) {
+    const onScroll = () => {
+      nav.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
+
+    // Apply the correct state first, then enable transitions on the next frame.
+    // Reloading a scrolled page would otherwise paint the expanded navbar and
+    // animate it shut, which reads as a loading glitch.
+    onScroll();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => nav.classList.add('is-ready'));
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
 </script>

@@ -1,15 +1,27 @@
 {
   "name": "Asnapet Treasures",
   "short_name": "Asnapet",
+  "description": "Farm inputs, household essentials and bulk shop supplies delivered across Nairobi.",
+  "lang": "en-KE",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/app-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "theme_color": "#14452e",
   "background_color": "#fffdf7",
-  "display": "standalone"
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "business"]
 }

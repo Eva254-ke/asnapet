@@ -3,10 +3,18 @@ import Layout from '../layout/Layout.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Products from '../components/Products.astro';
+import Faq from '../components/Faq.astro';
+import { categoryNames } from '../data/categories';
 ---
 
-<Layout title="Home" description="Premium farming tools and household essentials delivered across Nairobi by Asnapet Treasures.">
+<Layout
+  title="Farm Inputs & Household Essentials in Nairobi"
+  description="Asnapet Treasures supplies quality farm inputs, household essentials and bulk shop supplies across Nairobi. Free delivery over KSh 2,000, stock confirmed before you pay, M-Pesa accepted."
+  itemList={categoryNames}
+  includeFaq={true}
+>
   <Hero />
   <Products />
   <About />
+  <Faq />
 </Layout>

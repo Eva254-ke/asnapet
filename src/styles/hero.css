@@ -1,0 +1,171 @@
+.hero {
+  position: relative;
+  min-height: min(760px, calc(100dvh - 72px));
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  color: #fff;
+  isolation: isolate;
+}
+
+/* The photo itself, sized to cover the section */
+.hero__image {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* Slight overscale hides edge artefacts from the gradient blend */
+  transform: scale(1.03);
+}
+
+/* Darkening scrim, kept separate from the photo so the gradient does not have
+   to be re-composited with the image on resize */
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 25, 17, 0.78) 0%,
+    rgba(9, 25, 17, 0.55) 45%,
+    rgba(9, 25, 17, 0.86) 100%
+  );
+}
+
+/* Warm brand glow anchored behind the copy, so text sits on a richer field */
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 55% 45% at 50% 42%, rgba(31, 107, 69, 0.32), transparent 70%),
+    radial-gradient(ellipse 40% 35% at 82% 78%, rgba(244, 191, 87, 0.14), transparent 70%);
+}
+
+.hero__container {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: inherit;
+  padding: var(--space-20) 0 var(--space-16);
+}
+
+.hero__content {
+  max-width: 900px;
+  padding: var(--space-4) 0;
+  text-align: center;
+}
+
+.hero__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 26px);
+  margin: 0 auto;
+  font-size: clamp(2.9rem, 7.5vw, 6.2rem);
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-shadow: 0 4px 40px rgba(9, 25, 17, 0.4);
+}
+.hero__title-main {
+  color: #ffffff;
+}
+.hero__title-accent {
+  /* Gradient wordmark; falls back to solid gold where unsupported */
+  color: var(--color-secondary-light);
+  background: linear-gradient(135deg, #f4bf57 0%, #e8a530 55%, #f7d183 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero__title-accent {
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+.hero__subtitle {
+  max-width: 680px;
+  margin: var(--space-6) auto 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(1.02rem, 1.6vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+}
+
+/* Scroll cue — hidden on short viewports where it would overlap content */
+.hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-6);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 48px;
+  translate: -50% 0;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-pill);
+}
+.hero__scroll span {
+  width: 4px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.85);
+  animation: hero-scroll 1.8s var(--ease-in-out) infinite;
+}
+@keyframes hero-scroll {
+  0%, 100% { transform: translateY(-7px); opacity: 0.4; }
+  50% { transform: translateY(7px); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+  }
+  .hero__container {
+    min-height: 640px;
+    padding-top: var(--space-20);
+  }
+}
+
+@media (max-width: 720px) {
+  .hero__container {
+    min-height: 580px;
+    padding: var(--space-16) 0 var(--space-16);
+  }
+  .hero__title {
+    row-gap: 0;
+  }
+  .hero__actions {
+    flex-direction: column;
+  }
+  .hero__content {
+    text-align: left;
+  }
+  .hero__title,
+  .hero__subtitle {
+    justify-content: flex-start;
+    margin-inline: 0;
+  }
+  .hero__scroll {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll span {
+    animation: none;
+  }
+}

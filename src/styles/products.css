@@ -1,0 +1,354 @@
+.products {
+  padding: var(--space-24) 0 var(--space-16);
+}
+
+.products__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.category-showcase {
+  position: relative;
+  min-height: 430px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-ink);
+  box-shadow: var(--shadow-md);
+  isolation: isolate;
+  transition:
+    transform var(--dur-mid) var(--ease-out),
+    box-shadow var(--dur-mid) var(--ease-out);
+}
+.category-showcase:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+}
+
+.category-showcase__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 620ms var(--ease-out);
+}
+.category-showcase:hover .category-showcase__image {
+  transform: scale(1.06);
+}
+
+.category-showcase__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  /* Three stops rather than two, so the copy sits on solid contrast while the
+     top of the image stays legible. */
+  background: linear-gradient(
+    180deg,
+    rgba(11, 30, 20, 0.05) 0%,
+    rgba(11, 30, 20, 0.45) 55%,
+    rgba(11, 30, 20, 0.92) 100%
+  );
+  transition: opacity var(--dur-mid) var(--ease-out);
+}
+.category-showcase:hover .category-showcase__overlay {
+  opacity: 0.92;
+}
+
+.category-showcase__content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  color: #fff;
+}
+.category-showcase__eyebrow {
+  color: var(--color-secondary-light);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.category-showcase__title {
+  font-family: 'Rubik', system-ui, sans-serif;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.category-showcase__text {
+  max-width: 420px;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* Affordance revealed on hover — the whole card is the link, this just signals it.
+   Kept visible on touch devices, which have no hover state. */
+.category-showcase__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  color: var(--color-secondary-light);
+  font-weight: 800;
+  font-size: 0.9rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity var(--dur-mid) var(--ease-out),
+    transform var(--dur-mid) var(--ease-out);
+}
+.category-showcase:hover .category-showcase__link,
+.category-showcase:focus-visible .category-showcase__link {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: none) {
+  .category-showcase__link {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.products__cta-row {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-12);
+}
+.products__read-more {
+  min-width: 220px;
+  border-radius: var(--radius-pill);
+}
+
+/* ---------- Why us ---------- */
+
+.why-us {
+  position: relative;
+  padding: var(--space-20) 0;
+  background: linear-gradient(135deg, #eaf2e8 0%, #fffdf7 100%);
+  overflow: hidden;
+}
+.why-us::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(135deg, rgba(31, 107, 69, 0.05) 0 1px, transparent 1px 26px);
+}
+
+.why-us__container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+.why-us__heading {
+  margin-bottom: 0;
+}
+.why-us__heading h2 {
+  max-width: 620px;
+}
+.why-us__heading p {
+  max-width: 560px;
+}
+
+.why-us__proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+.why-us__proof span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  border: 1px solid rgba(31, 107, 69, 0.22);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 253, 247, 0.86);
+  color: var(--color-primary-dark);
+  font-weight: 900;
+  font-size: 0.92rem;
+  box-shadow: var(--shadow-xs);
+}
+
+.why-us__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.why-card {
+  position: relative;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-6);
+  border: 1px solid rgba(31, 107, 69, 0.16);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow-md);
+  transition:
+    transform var(--dur-mid) var(--ease-out),
+    box-shadow var(--dur-mid) var(--ease-out),
+    border-color var(--dur-mid) var(--ease-out);
+}
+.why-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(31, 107, 69, 0.32);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Icon badge replaces the previous bare accent rule */
+.why-card__icon {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-6);
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary-soft), #f5efe2);
+  color: var(--color-primary);
+  box-shadow: inset 0 0 0 1px rgba(31, 107, 69, 0.14);
+  transition: transform var(--dur-mid) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.why-card:hover .why-card__icon {
+  transform: scale(1.06) rotate(-3deg);
+  color: var(--color-primary-dark);
+}
+.why-card__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.why-card h3 {
+  font-size: 1.24rem;
+  color: var(--color-primary-dark);
+}
+.why-card p {
+  margin-top: var(--space-3);
+  color: var(--color-muted);
+  font-size: 0.97rem;
+}
+
+/* Two-column step avoids the jump from three columns straight to one */
+@media (max-width: 1080px) {
+  .products__grid,
+  .why-us__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .why-us__container {
+    grid-template-columns: 1fr;
+  }
+  .category-showcase {
+    min-height: 360px;
+  }
+  .why-card {
+    min-height: auto;
+    padding-top: var(--space-16);
+  }
+}
+
+/* ---------- Mobile: stay 2-up ----------
+   The grids deliberately hold two columns down to the smallest screens, which
+   is the familiar shopping layout. Everything inside the cards is scaled to
+   suit a ~155px column: tighter gaps and padding, smaller type, and
+   descriptions clamped to two lines so card heights stay even. */
+
+@media (max-width: 680px) {
+  .products {
+    padding: var(--space-16) 0;
+  }
+  .products__grid,
+  .why-us__grid {
+    gap: var(--space-3);
+  }
+  .category-showcase {
+    min-height: 260px;
+    border-radius: var(--radius-md);
+  }
+  .category-showcase__content {
+    gap: var(--space-1);
+    padding: var(--space-4);
+  }
+  .category-showcase__eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+  }
+  .category-showcase__title {
+    font-size: 1.02rem;
+    line-height: 1.2;
+  }
+  .category-showcase__text {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    /* Two lines keeps the tiles visually even without hiding the copy */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  /* The "View range" affordance is redundant at this size — the whole tile is
+     tappable and the space is better spent on the title. */
+  .category-showcase__link {
+    display: none;
+  }
+
+  .why-card {
+    padding: var(--space-12) var(--space-4) var(--space-4);
+    border-radius: var(--radius-md);
+  }
+  .why-card__icon {
+    top: var(--space-4);
+    left: var(--space-4);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+  }
+  .why-card__icon svg {
+    width: 19px;
+    height: 19px;
+  }
+  .why-card h3 {
+    font-size: 1.02rem;
+  }
+  .why-card p {
+    margin-top: var(--space-2);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .why-us__proof span {
+    min-height: 34px;
+    padding: 6px 14px;
+    font-size: 0.84rem;
+  }
+  .products__cta-row {
+    margin-top: var(--space-8);
+  }
+}
+
+/* Below ~380px two columns of body copy stop being readable, so the
+   description is dropped rather than shrunk further. */
+@media (max-width: 380px) {
+  .category-showcase {
+    min-height: 210px;
+  }
+  .category-showcase__text {
+    display: none;
+  }
+  .category-showcase__title {
+    font-size: 0.95rem;
+  }
+}

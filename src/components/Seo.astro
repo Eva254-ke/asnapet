@@ -1,0 +1,221 @@
+---
+/**
+ * All <head> metadata: canonical, Open Graph, Twitter cards and JSON-LD.
+ *
+ * Every absolute URL is derived from `Astro.site` (set in astro.config.mjs),
+ * so pointing the site at a new domain needs no changes here.
+ */
+import { business, faqs } from '../data/site';
+
+interface Breadcrumb {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  /** Page-relative OG image. Must live in `public/` so the URL is stable for
+   *  social crawlers, and should be 1200x630 to match the dimensions below. */
+  image?: string;
+  imageAlt?: string;
+  /** Omit the "| Asnapet Treasures" suffix, for pages that title themselves. */
+  rawTitle?: boolean;
+  noindex?: boolean;
+  breadcrumbs?: Breadcrumb[];
+  /** Emit FAQPage schema — only on the page that actually renders the FAQ. */
+  includeFaq?: boolean;
+  /** Product category names to emit as an ItemList. */
+  itemList?: string[];
+}
+
+const {
+  title,
+  description,
+  image = '/og-image.jpg',
+  imageAlt = `${business.name} — ${business.tagline}`,
+  rawTitle = false,
+  noindex = false,
+  breadcrumbs = [],
+  includeFaq = false,
+  itemList = [],
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://asnapettreasures.co.ke');
+
+/**
+ * Normalise the path into the URL we want indexed.
+ *
+ * `build.format: 'file'` means Astro.url.pathname is `/index.html` or
+ * `/products.html` during the build, but those are not the URLs visitors or
+ * crawlers should see. Strip the `.html` extension and any trailing slash so
+ * the canonical matches the clean URL the host actually serves.
+ */
+function canonicalPath(pathname: string): string {
+  const clean = pathname
+    .replace(/\/index\.html?$/i, '/')
+    .replace(/\.html?$/i, '')
+    .replace(/\/+$/, '');
+  return clean === '' ? '/' : clean;
+}
+
+const canonical = new URL(canonicalPath(Astro.url.pathname), site).href;
+const ogImage = new URL(image, site).href;
+const fullTitle = rawTitle ? title : `${title} | ${business.name}`;
+
+const orgId = `${site.href}#organization`;
+const websiteId = `${site.href}#website`;
+
+const sameAs = Object.values(business.social).filter(Boolean);
+
+// Group opening hours into schema.org OpeningHoursSpecification entries.
+const openingHoursSpecification = business.openingHours.map((slot) => ({
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: slot.days.map((d) => `https://schema.org/${d}`),
+  opens: slot.opens,
+  closes: slot.closes,
+}));
+
+const localBusiness = {
+  '@type': 'Store',
+  '@id': orgId,
+  name: business.name,
+  legalName: business.legalName,
+  description: business.description,
+  url: site.href,
+  image: new URL('/og-image.jpg', site).href,
+  logo: new URL('/app-icon-512.png', site).href,
+  telephone: business.phone,
+  email: business.email,
+  priceRange: 'KSh',
+  currenciesAccepted: business.currency,
+  paymentAccepted: 'M-Pesa, Cash, Bank transfer',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.street,
+    addressLocality: business.city,
+    addressRegion: business.region,
+    postalCode: business.postalCode,
+    addressCountry: business.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: business.latitude,
+    longitude: business.longitude,
+  },
+  areaServed: business.areasServed.map((area) => ({ '@type': 'Place', name: area })),
+  openingHoursSpecification,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: business.phone,
+    contactType: 'sales',
+    areaServed: business.country,
+    availableLanguage: ['en', 'sw'],
+  },
+  ...(sameAs.length ? { sameAs } : {}),
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': websiteId,
+  url: site.href,
+  name: business.name,
+  description: business.description,
+  publisher: { '@id': orgId },
+  inLanguage: 'en-KE',
+};
+
+const webPage = {
+  '@type': 'WebPage',
+  '@id': `${canonical}#webpage`,
+  url: canonical,
+  name: fullTitle,
+  description,
+  isPartOf: { '@id': websiteId },
+  about: { '@id': orgId },
+  inLanguage: 'en-KE',
+};
+
+const graph: Record<string, unknown>[] = [localBusiness, website, webPage];
+
+if (breadcrumbs.length) {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${canonical}#breadcrumbs`,
+    itemListElement: breadcrumbs.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: new URL(crumb.path, site).href,
+    })),
+  });
+}
+
+if (itemList.length) {
+  graph.push({
+    '@type': 'ItemList',
+    '@id': `${canonical}#categories`,
+    name: 'Product categories',
+    numberOfItems: itemList.length,
+    itemListElement: itemList.map((name, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name,
+    })),
+  });
+}
+
+if (includeFaq) {
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  });
+}
+
+const jsonLd = { '@context': 'https://schema.org', '@graph': graph };
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+{
+  noindex ? (
+    <meta name="robots" content="noindex, nofollow" />
+  ) : (
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  )
+}
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={business.name} />
+<meta property="og:locale" content="en_KE" />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+<!-- Local business signals -->
+<meta name="geo.region" content="KE-30" />
+<meta name="geo.placename" content={`${business.street}, ${business.city}`} />
+<meta name="geo.position" content={`${business.latitude};${business.longitude}`} />
+<meta name="ICBM" content={`${business.latitude}, ${business.longitude}`} />
+<meta name="author" content={business.legalName} />
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

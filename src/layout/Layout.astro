@@ -2,42 +2,109 @@
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import Seo from '../components/Seo.astro';
 
-const { title, description } = Astro.props;
+// Imported here (not linked from /public) so Astro bundles, minifies and
+// fingerprints them into a single stylesheet instead of 7 blocking requests.
+import '../styles/global.css';
+import '../styles/navbar.css';
+import '../styles/hero.css';
+import '../styles/about.css';
+import '../styles/products.css';
+import '../styles/category.css';
+import '../styles/faq.css';
+import '../styles/footer.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  rawTitle?: boolean;
+  noindex?: boolean;
+  breadcrumbs?: { name: string; path: string }[];
+  includeFaq?: boolean;
+  itemList?: string[];
+}
+
+// Hero images are rendered by <Image> with fetchpriority="high", so the preload
+// scanner finds them in the markup — no hand-written <link rel="preload"> needed.
+const seo = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content={description} />
-  <title>{title} | Asnapet Treasures</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="image" href="/images/istockphoto-1254418154-170667a.jpg" />
-  <link rel="stylesheet" href="/styles/global.css" />
-  <link rel="stylesheet" href="/styles/navbar.css" />
-  <link rel="stylesheet" href="/styles/hero.css" />
-  <link rel="stylesheet" href="/styles/about.css" />
-  <link rel="stylesheet" href="/styles/products.css" />
-  <link rel="stylesheet" href="/styles/category.css" />
-  <link rel="stylesheet" href="/styles/footer.css" />
-</head>
-<body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-  <Navbar />
-  <main id="main-content">
-    <slot />
-  </main>
-  <Footer />
-  <WhatsAppFloat />
-</body>
+<html lang="en-KE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <Seo {...seo} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#14452e" />
+    <meta name="apple-mobile-web-app-title" content="Asnapet" />
+
+    <!-- Fonts: preconnect + a non-blocking stylesheet, rather than an @import
+         inside CSS (which serialises the font request behind the CSS parse). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rubik:wght@500;600;700;800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rubik:wght@500;600;700;800&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rubik:wght@500;600;700;800&display=swap"
+      />
+    </noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <Navbar />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppFloat />
+
+    <script>
+      // Reveal-on-scroll. Opt-in per element via [data-reveal]; elements are
+      // shown immediately if IntersectionObserver or motion is unavailable.
+      const reveal = () => {
+        const targets = document.querySelectorAll('[data-reveal]');
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (prefersReduced || !('IntersectionObserver' in window)) {
+          targets.forEach((el) => el.classList.add('is-revealed'));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+
+        targets.forEach((el) => observer.observe(el));
+      };
+
+      reveal();
+    </script>
+  </body>
 </html>
-
-
-

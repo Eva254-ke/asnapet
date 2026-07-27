@@ -1,0 +1,159 @@
+---
+import Layout from '../layout/Layout.astro';
+import { waLinks } from '../data/site';
+
+const suggestions = [
+  { label: 'Home', href: '/', text: 'Start from the beginning.' },
+  { label: 'All products', href: '/products', text: 'Every line we supply, in one place.' },
+  { label: 'Household essentials', href: '/household', text: 'Kitchen, cleaning, appliances and more.' },
+  { label: 'FAQ', href: '/#faq', text: 'Delivery, payment and ordering answers.' },
+];
+---
+
+<Layout
+  title="Page Not Found"
+  description="The page you were looking for could not be found. Browse the Asnapet Treasures product range or get in touch on WhatsApp."
+  noindex={true}
+>
+  <section class="notfound">
+    <div class="container notfound__container">
+      <span class="notfound__code" aria-hidden="true">404</span>
+      <span class="eyebrow">Page not found</span>
+      <h1 class="notfound__title">This page has moved or never existed.</h1>
+      <p class="notfound__text">
+        The link may be out of date. Try one of the pages below, or message us directly and we will
+        point you to what you need.
+      </p>
+
+      <div class="notfound__actions">
+        <a href="/" class="btn btn-primary">
+          Back to home
+          <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a href={waLinks.catalog} class="btn btn-ghost" target="_blank" rel="noopener noreferrer">
+          Message us on WhatsApp
+        </a>
+      </div>
+
+      <ul class="notfound__links">
+        {
+          suggestions.map((item) => (
+            <li>
+              <a href={item.href}>
+                <strong>{item.label}</strong>
+                <span>{item.text}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .notfound {
+    display: grid;
+    place-items: center;
+    min-height: 70vh;
+    padding: var(--space-24) 0;
+  }
+
+  .notfound__container {
+    position: relative;
+    max-width: 720px;
+    text-align: center;
+  }
+
+  /* Oversized watermark behind the copy, clipped to stay decorative */
+  .notfound__code {
+    position: absolute;
+    top: -0.35em;
+    left: 50%;
+    z-index: -1;
+    translate: -50% 0;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-size: clamp(9rem, 26vw, 18rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: rgba(31, 107, 69, 0.08);
+    user-select: none;
+  }
+
+  .notfound__title {
+    margin-top: var(--space-4);
+    font-size: clamp(1.8rem, 4.5vw, 2.9rem);
+  }
+
+  .notfound__text {
+    max-width: 52ch;
+    margin: var(--space-4) auto 0;
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
+
+  .notfound__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  .notfound__links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin: var(--space-12) 0 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+  }
+
+  .notfound__links a {
+    display: grid;
+    gap: 2px;
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-xs);
+    transition:
+      transform var(--dur-mid) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-mid) var(--ease-out);
+  }
+  .notfound__links a:hover {
+    transform: translateY(-3px);
+    border-color: rgba(31, 107, 69, 0.34);
+    box-shadow: var(--shadow-sm);
+  }
+  .notfound__links strong {
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+  }
+  .notfound__links span {
+    color: var(--color-muted);
+    font-size: 0.92rem;
+  }
+
+  /* Kept 2-up on mobile; the descriptions shrink instead of the grid collapsing. */
+  @media (max-width: 620px) {
+    .notfound__links {
+      gap: var(--space-3);
+      margin-top: var(--space-10);
+    }
+    .notfound__links a {
+      padding: var(--space-4);
+    }
+    .notfound__links strong {
+      font-size: 0.95rem;
+    }
+    .notfound__links span {
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+  }
+</style>

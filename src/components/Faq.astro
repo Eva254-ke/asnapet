@@ -1,0 +1,52 @@
+---
+/**
+ * FAQ accordion. Built on <details>/<summary> so it works without JavaScript
+ * and is keyboard-operable by default. The same `faqs` array is emitted as
+ * FAQPage JSON-LD by Seo.astro, keeping the copy and the schema identical.
+ */
+import { faqs, waLinks } from '../data/site';
+---
+
+<section class="faq section-lazy" id="faq" aria-labelledby="faq-title">
+  <div class="container faq__container">
+    <div class="faq__intro" data-reveal>
+      <span class="eyebrow">Questions</span>
+      <h2 class="faq__title" id="faq-title">Everything you might ask before ordering.</h2>
+      <p class="faq__lede">
+        Straight answers on delivery, payment and sourcing. If something is not covered here, send a
+        message and we will answer directly.
+      </p>
+      <a class="btn btn-ghost faq__cta" href={waLinks.quote} target="_blank" rel="noopener noreferrer">
+        Ask a question
+        <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+
+    <div class="faq__list" data-reveal>
+      {
+        faqs.map((faq, index) => (
+          <details class="faq__item" name="faq" open={index === 0}>
+            <summary class="faq__question">
+              <span>{faq.question}</span>
+              <span class="faq__marker" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path
+                    d="M6 9l6 6 6-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </summary>
+            <div class="faq__answer">
+              <p>{faq.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

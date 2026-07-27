@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Keep crawlers out of build artefacts and the error page.
+Disallow: /404
+
+Sitemap: https://asnapettreasures.co.ke/sitemap-index.xml
