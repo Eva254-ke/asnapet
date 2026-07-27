@@ -2,6 +2,8 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // The production origin. Everything SEO-related derives from this single value:
 // canonical URLs, Open Graph tags, sitemap.xml, robots.txt and JSON-LD.
 // When the real domain is purchased, change this one line and rebuild.
@@ -34,4 +36,5 @@ export default defineConfig({
   },
 
   compressHTML: true,
+  adapter: cloudflare(),
 });
