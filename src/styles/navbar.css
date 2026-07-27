@@ -42,6 +42,10 @@
   opacity: 0;
 }
 
+.navbar__announcement-short {
+  display: none;
+}
+
 .navbar__announcement-inner {
   min-height: 38px;
   display: flex;
@@ -290,17 +294,30 @@ body.has-menu-open {
 }
 
 @media (max-width: 560px) {
-  .navbar__announcement-inner {
-    flex-direction: column;
-    gap: 0;
-    padding: var(--space-1) 0 var(--space-2);
-  }
+  /* A slim strip, not a second bar. Stacking the two items made this 96px tall
+     — taller than the navbar it sits above. Holding one nowrap row and scaling
+     the type with the viewport keeps it near 34px on every phone. */
   .navbar__announcement {
-    max-height: 96px;
+    max-height: 36px;
+    font-size: clamp(0.62rem, 2.9vw, 0.8rem);
   }
-  /* Full 44px target on touch, where this is the primary call-to-action */
+  .navbar__announcement-inner {
+    min-height: 32px;
+    gap: var(--space-2);
+    padding: 0;
+    white-space: nowrap;
+  }
+  .navbar__announcement-full {
+    display: none;
+  }
+  .navbar__announcement-short {
+    display: inline;
+  }
+  /* 30px rather than the 44px this used to reserve. Still clears the 24px
+     WCAG 2.5.8 minimum, and the number is also in the footer at full size. */
   .navbar__announcement a {
-    min-height: 44px;
+    min-height: 30px;
+    padding: 0 var(--space-1);
   }
   .navbar__logo {
     flex-direction: column;

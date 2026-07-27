@@ -13,7 +13,17 @@ const links = [
 <nav class="navbar" id="site-nav" aria-label="Primary navigation">
   <div class="navbar__announcement">
     <div class="container navbar__announcement-inner">
-      <span>Free Nairobi delivery over {business.freeDeliveryThreshold}</span>
+      {/* Two variants rather than one wrapping line: on a phone the strip has
+          to stay on a single row to keep its height down, and "Nairobi" is the
+          word that can go — the city is already stated all over the page. Only
+          one is ever rendered (the other is display:none, so it is out of the
+          accessibility tree too). */}
+      <span class="navbar__announcement-full">
+        Free Nairobi delivery over {business.freeDeliveryThreshold}
+      </span>
+      <span class="navbar__announcement-short">
+        Free delivery over {business.freeDeliveryThreshold}
+      </span>
       <a href={`tel:${business.phone}`}>Call {business.phoneDisplay}</a>
     </div>
   </div>

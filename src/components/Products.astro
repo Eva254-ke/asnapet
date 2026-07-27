@@ -6,27 +6,18 @@ const strengths = [
   {
     title: 'Local fit',
     text: 'Products are selected for Nairobi homes, farms, kiosks and small operators.',
-    icon: 'pin',
   },
   {
     title: 'Stock clarity',
     text: 'We confirm availability before you commit, so you know what can be supplied.',
-    icon: 'check',
   },
   {
     title: 'Practical sourcing',
     text: 'Supplier choices focus on useful quality, sensible pricing and repeat availability.',
-    icon: 'box',
   },
 ];
 
 const trustPoints = ['Home', 'Farm', 'Shop'];
-
-const icons: Record<string, string> = {
-  pin: 'M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Zm0-8.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z',
-  check: 'M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2Z',
-  box: 'M12 2 3 6.5v11L12 22l9-4.5v-11L12 2Zm0 2.3 6.5 3.2L12 10.7 5.5 7.5 12 4.3ZM5 9.3l6 3v7.2l-6-3V9.3Zm8 10.2v-7.2l6-3v7.2l-6 3Z',
-};
 ---
 
 <section class="products section-lazy" id="products" aria-labelledby="products-title">
@@ -102,11 +93,6 @@ const icons: Record<string, string> = {
       {
         strengths.map((item, index) => (
           <article class="why-card" data-reveal data-reveal-delay={String(index + 1)}>
-            <span class="why-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" focusable="false">
-                <path d={icons[item.icon]} fill="currentColor" />
-              </svg>
-            </span>
             <h3>{item.title}</h3>
             <p>{item.text}</p>
           </article>

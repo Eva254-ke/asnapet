@@ -124,6 +124,19 @@
   border-radius: var(--radius-pill);
 }
 
+/* Matches the breakpoint where global.css stretches every .btn to 100%. As a
+   full-width slab this pill looked like a form submit; sized to its label it
+   reads as the quiet "and there's more" link it is. Two classes deep so it
+   outranks the plain .btn rule whatever order the sheets land in. */
+@media (max-width: 720px) {
+  .products__cta-row .products__read-more {
+    width: auto;
+    min-width: 0;
+    padding-inline: var(--space-5);
+    font-size: 0.92rem;
+  }
+}
+
 /* ---------- Why us ---------- */
 
 .why-us {
@@ -183,12 +196,14 @@
   gap: var(--space-4);
 }
 
+/* Text-only cards. The icon badge that used to sit top-left was carrying no
+   meaning the heading did not already carry, so the card now leads with the
+   heading and the grid keeps the three the same height. */
 .why-card {
   position: relative;
-  min-height: 240px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding: var(--space-6);
   border: 1px solid rgba(31, 107, 69, 0.16);
   border-radius: var(--radius-lg);
@@ -203,30 +218,6 @@
   transform: translateY(-4px);
   border-color: rgba(31, 107, 69, 0.32);
   box-shadow: var(--shadow-lg);
-}
-
-/* Icon badge replaces the previous bare accent rule */
-.why-card__icon {
-  position: absolute;
-  top: var(--space-5);
-  left: var(--space-6);
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--color-primary-soft), #f5efe2);
-  color: var(--color-primary);
-  box-shadow: inset 0 0 0 1px rgba(31, 107, 69, 0.14);
-  transition: transform var(--dur-mid) var(--ease-out), color var(--dur-fast) var(--ease-out);
-}
-.why-card:hover .why-card__icon {
-  transform: scale(1.06) rotate(-3deg);
-  color: var(--color-primary-dark);
-}
-.why-card__icon svg {
-  width: 24px;
-  height: 24px;
 }
 
 .why-card h3 {
@@ -245,6 +236,20 @@
   .why-us__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  /* There are nine categories, so the last tile is left stranded alone on a
+     final row of two. Drop it rather than leave a half-empty row — nothing is
+     lost, since every category is on /products and the CTA below points there.
+     Written as :last-child:nth-child(odd) so it self-corrects if the count
+     changes: an even list keeps all of its tiles. */
+  .products__grid > :last-child:nth-child(odd) {
+    display: none;
+  }
+  /* Same stranded-last-item problem, opposite fix: there are only three
+     strengths, so dropping one would lose a third of the section. Let it run
+     the full width instead — the row still reads as complete. */
+  .why-us__grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 980px) {
@@ -253,10 +258,6 @@
   }
   .category-showcase {
     min-height: 360px;
-  }
-  .why-card {
-    min-height: auto;
-    padding-top: var(--space-16);
   }
 }
 
@@ -306,19 +307,8 @@
   }
 
   .why-card {
-    padding: var(--space-12) var(--space-4) var(--space-4);
+    padding: var(--space-4);
     border-radius: var(--radius-md);
-  }
-  .why-card__icon {
-    top: var(--space-4);
-    left: var(--space-4);
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-sm);
-  }
-  .why-card__icon svg {
-    width: 19px;
-    height: 19px;
   }
   .why-card h3 {
     font-size: 1.02rem;

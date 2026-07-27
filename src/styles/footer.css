@@ -184,8 +184,13 @@
   .site-footer__hours span:nth-child(odd) {
     margin-top: var(--space-2);
   }
+  /* Sized to its label rather than the full column. A full-bleed green slab
+     was the loudest thing in the footer and competed with the WhatsApp float
+     sitting a few pixels away. */
   .site-footer__wa {
-    width: 100%;
+    min-height: 42px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
   }
   .site-footer__bottom {
     flex-direction: column;
