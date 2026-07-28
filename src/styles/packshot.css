@@ -1,52 +1,43 @@
-/* Fallback tile shown by PackShot.astro when a category has no photo yet.
-   Sized to fill whatever slot the photo would have occupied, so swapping in a
-   real image causes no layout shift. */
-
 .packshot {
   display: grid;
   place-items: center;
   width: 100%;
   height: 100%;
-  /* Woven diagonal on a deep brand field — reads as an intentional pattern
-     rather than a missing asset. */
-  background:
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 12px),
-    linear-gradient(150deg, var(--color-primary) 0%, var(--color-primary-dark) 55%, var(--color-primary-deep) 100%);
+  background: linear-gradient(150deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   color: rgba(255, 255, 255, 0.9);
 }
 
 .packshot__icon {
-  width: clamp(34px, 22%, 68px);
-  height: clamp(34px, 22%, 68px);
-  filter: drop-shadow(0 2px 8px rgba(9, 25, 17, 0.35));
+  width: 56px;
+  height: 56px;
+  filter: drop-shadow(0 2px 8px rgba(9, 26, 18, 0.32));
 }
 
-/* Inside the full-bleed home page tiles the icon sits behind the caption, so it
-   is nudged up and dimmed to stay clear of the text. */
 .category-showcase .packshot {
-  position: absolute;
-  inset: 0;
-}
-.category-showcase .packshot__icon {
-  margin-bottom: 18%;
-  opacity: 0.85;
+  min-height: 100%;
 }
 
-/* On the listing cards the tile stands in for the 1.35:1 photo crop. */
 .subcategory-card__media .packshot {
   aspect-ratio: 1.35 / 1;
 }
 
-/* Warmer variant, used where two tiles would otherwise sit side by side and
-   read as one block. Applied via `tileClass`. */
 .packshot--warm {
-  background:
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 12px),
-    linear-gradient(150deg, #a9701f 0%, var(--color-secondary-dark) 60%, #5d3810 100%);
+  background: linear-gradient(150deg, #a9701f 0%, var(--color-secondary-dark) 100%);
 }
 
-/* Tall variant for the segment page hero visual. */
 .packshot--hero .packshot__icon {
-  width: clamp(56px, 18%, 104px);
-  height: clamp(56px, 18%, 104px);
+  width: 88px;
+  height: 88px;
+}
+
+@media (max-width: 680px) {
+  .packshot__icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .packshot--hero .packshot__icon {
+    width: 64px;
+    height: 64px;
+  }
 }

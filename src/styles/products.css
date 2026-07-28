@@ -1,147 +1,80 @@
 .products {
   padding: var(--space-24) 0 var(--space-16);
+  background: var(--color-surface);
 }
 
 .products__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-5);
-}
-
-/* ---------- Filling the last row on desktop ----------
-   Eight lines into three columns leaves the final row two-thirds full, with a
-   dead third where a tile should be. Rather than hide the stragglers (which is
-   fine on a phone, where a tile is small, but throws away a whole product line
-   on a desktop where it is a large card) the grid runs on six narrow tracks and
-   each tile normally spans two of them — visually identical to three columns.
-   That divisibility is what lets an incomplete last row be rebalanced: two
-   leftovers take three tracks each, a lone leftover takes all six. The result
-   is a flush block at any count.
-
-   Scoped to min-width so it cannot interfere with the 2-up rules below, which
-   would otherwise fight these span declarations on specificity. */
-@media (min-width: 1081px) {
-  .products__grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-  .products__grid > * {
-    grid-column: span 2;
-  }
-  /* `:nth-child(3n+1)` is the first tile of a row; pairing it with
-     `:nth-last-child(2)` matches only when that row holds the final two. */
-  .products__grid > :nth-child(3n + 1):nth-last-child(2),
-  .products__grid > :nth-child(3n + 1):nth-last-child(2) ~ * {
-    grid-column: span 3;
-  }
-  .products__grid > :nth-child(3n + 1):last-child {
-    grid-column: span 6;
-  }
+  gap: var(--space-6);
 }
 
 .category-showcase {
   position: relative;
-  min-height: 430px;
   display: flex;
-  align-items: flex-end;
+  min-height: 100%;
+  flex-direction: column;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xs);
   overflow: hidden;
-  border-radius: var(--radius-lg);
-  background: var(--color-ink);
-  box-shadow: var(--shadow-md);
-  isolation: isolate;
   transition:
     transform var(--dur-mid) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
     box-shadow var(--dur-mid) var(--ease-out);
 }
+
 .category-showcase:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+  border-color: rgba(23, 97, 63, 0.36);
+  box-shadow: var(--shadow-md);
 }
 
 .category-showcase__image {
-  position: absolute;
-  inset: 0;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  transition: transform 620ms var(--ease-out);
-}
-.category-showcase:hover .category-showcase__image {
-  transform: scale(1.06);
-}
-
-.category-showcase__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  /* Three stops rather than two, so the copy sits on solid contrast while the
-     top of the image stays legible. */
-  background: linear-gradient(
-    180deg,
-    rgba(11, 30, 20, 0.05) 0%,
-    rgba(11, 30, 20, 0.45) 55%,
-    rgba(11, 30, 20, 0.92) 100%
-  );
-  transition: opacity var(--dur-mid) var(--ease-out);
-}
-.category-showcase:hover .category-showcase__overlay {
-  opacity: 0.92;
+  background: var(--color-surface-muted);
 }
 
 .category-showcase__content {
-  position: relative;
-  z-index: 2;
   display: grid;
   gap: var(--space-2);
-  padding: var(--space-6);
-  color: #fff;
+  padding: var(--space-4);
 }
+
 .category-showcase__eyebrow {
-  color: var(--color-secondary-light);
-  font-size: 0.74rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  color: var(--color-secondary-dark);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
+
 .category-showcase__title {
   font-family: 'Rubik', system-ui, sans-serif;
-  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  font-size: 1.28rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  letter-spacing: 0;
+  line-height: 1.2;
+  color: var(--color-ink);
 }
+
 .category-showcase__text {
-  max-width: 420px;
-  color: rgba(255, 255, 255, 0.84);
+  color: var(--color-muted);
   font-size: 0.95rem;
   line-height: 1.55;
 }
 
-/* Affordance revealed on hover — the whole card is the link, this just signals it.
-   Kept visible on touch devices, which have no hover state. */
 .category-showcase__link {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   margin-top: var(--space-2);
-  color: var(--color-secondary-light);
+  color: var(--color-primary-dark);
   font-weight: 800;
-  font-size: 0.9rem;
-  opacity: 0;
-  transform: translateY(6px);
-  transition:
-    opacity var(--dur-mid) var(--ease-out),
-    transform var(--dur-mid) var(--ease-out);
-}
-.category-showcase:hover .category-showcase__link,
-.category-showcase:focus-visible .category-showcase__link {
-  opacity: 1;
-  transform: none;
-}
-@media (hover: none) {
-  .category-showcase__link {
-    opacity: 1;
-    transform: none;
-  }
+  font-size: 0.92rem;
 }
 
 .products__cta-row {
@@ -149,53 +82,32 @@
   justify-content: center;
   margin-top: var(--space-12);
 }
+
 .products__read-more {
   min-width: 220px;
-  border-radius: var(--radius-pill);
 }
-
-/* Matches the breakpoint where global.css stretches every .btn to 100%. As a
-   full-width slab this pill looked like a form submit; sized to its label it
-   reads as the quiet "and there's more" link it is. Two classes deep so it
-   outranks the plain .btn rule whatever order the sheets land in. */
-@media (max-width: 720px) {
-  .products__cta-row .products__read-more {
-    width: auto;
-    min-width: 0;
-    padding-inline: var(--space-5);
-    font-size: 0.92rem;
-  }
-}
-
-/* ---------- Why us ---------- */
 
 .why-us {
-  position: relative;
-  padding: var(--space-20) 0;
-  background: linear-gradient(135deg, #eaf2e8 0%, #fffdf7 100%);
-  overflow: hidden;
-}
-.why-us::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(135deg, rgba(31, 107, 69, 0.05) 0 1px, transparent 1px 26px);
+  padding: var(--space-24) 0;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border-soft);
 }
 
 .why-us__container {
-  position: relative;
   display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
+  grid-template-columns: 0.9fr 1.1fr;
   gap: var(--space-12);
-  align-items: center;
+  align-items: start;
 }
+
 .why-us__heading {
   margin-bottom: 0;
 }
+
 .why-us__heading h2 {
   max-width: 620px;
 }
+
 .why-us__heading p {
   max-width: 560px;
 }
@@ -203,21 +115,21 @@
 .why-us__proof {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  gap: var(--space-2);
   margin-top: var(--space-6);
 }
+
 .why-us__proof span {
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
-  padding: 8px 18px;
-  border: 1px solid rgba(31, 107, 69, 0.22);
+  min-height: 36px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-pill);
-  background: rgba(255, 253, 247, 0.86);
+  background: var(--color-surface);
   color: var(--color-primary-dark);
-  font-weight: 900;
-  font-size: 0.92rem;
-  box-shadow: var(--shadow-xs);
+  font-weight: 800;
+  font-size: 0.9rem;
 }
 
 .why-us__grid {
@@ -226,57 +138,34 @@
   gap: var(--space-4);
 }
 
-/* Text-only cards. The icon badge that used to sit top-left was carrying no
-   meaning the heading did not already carry, so the card now leads with the
-   heading and the grid keeps the three the same height. */
 .why-card {
-  position: relative;
   display: flex;
+  min-height: 100%;
   flex-direction: column;
-  justify-content: flex-start;
   padding: var(--space-6);
-  border: 1px solid rgba(31, 107, 69, 0.16);
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: var(--shadow-md);
-  transition:
-    transform var(--dur-mid) var(--ease-out),
-    box-shadow var(--dur-mid) var(--ease-out),
-    border-color var(--dur-mid) var(--ease-out);
-}
-.why-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(31, 107, 69, 0.32);
-  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xs);
 }
 
 .why-card h3 {
-  font-size: 1.24rem;
+  font-size: 1.18rem;
   color: var(--color-primary-dark);
 }
+
 .why-card p {
   margin-top: var(--space-3);
   color: var(--color-muted);
-  font-size: 0.97rem;
+  font-size: 0.96rem;
 }
 
-/* Two-column step avoids the jump from three columns straight to one */
 @media (max-width: 1080px) {
   .products__grid,
   .why-us__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  /* There are nine categories, so the last tile is left stranded alone on a
-     final row of two. Drop it rather than leave a half-empty row — nothing is
-     lost, since every category is on /products and the CTA below points there.
-     Written as :last-child:nth-child(odd) so it self-corrects if the count
-     changes: an even list keeps all of its tiles. */
-  .products__grid > :last-child:nth-child(odd) {
-    display: none;
-  }
-  /* Same stranded-last-item problem, opposite fix: there are only three
-     strengths, so dropping one would lose a third of the section. Let it run
-     the full width instead — the row still reads as complete. */
+
   .why-us__grid > :last-child:nth-child(odd) {
     grid-column: 1 / -1;
   }
@@ -286,89 +175,74 @@
   .why-us__container {
     grid-template-columns: 1fr;
   }
-  .category-showcase {
-    min-height: 360px;
-  }
 }
 
-/* ---------- Mobile: stay 2-up ----------
-   The grids deliberately hold two columns down to the smallest screens, which
-   is the familiar shopping layout. Everything inside the cards is scaled to
-   suit a ~155px column: tighter gaps and padding, smaller type, and
-   descriptions clamped to two lines so card heights stay even. */
-
 @media (max-width: 680px) {
-  .products {
+  .products,
+  .why-us {
     padding: var(--space-16) 0;
   }
+
   .products__grid,
   .why-us__grid {
     gap: var(--space-3);
   }
-  .category-showcase {
-    min-height: 260px;
-    border-radius: var(--radius-md);
+
+  .category-showcase__image {
+    aspect-ratio: 1 / 1;
   }
+
   .category-showcase__content {
-    gap: var(--space-1);
-    padding: var(--space-4);
+    padding: var(--space-3);
   }
+
   .category-showcase__eyebrow {
-    font-size: 0.62rem;
-    letter-spacing: 0.06em;
+    font-size: 0.66rem;
   }
+
   .category-showcase__title {
-    font-size: 1.02rem;
-    line-height: 1.2;
+    font-size: 1rem;
   }
+
   .category-showcase__text {
-    font-size: 0.82rem;
-    line-height: 1.45;
-    /* Two lines keeps the tiles visually even without hiding the copy */
     display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.84rem;
+    line-height: 1.45;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    overflow: hidden;
   }
-  /* The "View range" affordance is redundant at this size — the whole tile is
-     tappable and the space is better spent on the title. */
+
   .category-showcase__link {
     display: none;
   }
 
   .why-card {
     padding: var(--space-4);
-    border-radius: var(--radius-md);
   }
+
   .why-card h3 {
-    font-size: 1.02rem;
+    font-size: 1rem;
   }
+
   .why-card p {
     margin-top: var(--space-2);
-    font-size: 0.85rem;
+    font-size: 0.86rem;
     line-height: 1.5;
   }
 
-  .why-us__proof span {
-    min-height: 34px;
-    padding: 6px 14px;
-    font-size: 0.84rem;
-  }
   .products__cta-row {
     margin-top: var(--space-8);
   }
 }
 
-/* Below ~380px two columns of body copy stop being readable, so the
-   description is dropped rather than shrunk further. */
-@media (max-width: 380px) {
-  .category-showcase {
-    min-height: 210px;
+@media (max-width: 420px) {
+  .products__grid,
+  .why-us__grid {
+    grid-template-columns: 1fr;
   }
-  .category-showcase__text {
-    display: none;
-  }
-  .category-showcase__title {
-    font-size: 0.95rem;
+
+  .why-us__grid > :last-child:nth-child(odd) {
+    grid-column: auto;
   }
 }

@@ -4,16 +4,16 @@ import { categories } from '../data/categories';
 
 const strengths = [
   {
-    title: 'Branding included',
-    text: 'Your logo printed onto cups, bags, containers and labels, not just plain stock packaging.',
+    title: 'Branding handled',
+    text: 'We quote cups, bags, labels and containers with your logo when branding is needed.',
   },
   {
-    title: 'Right grade, confirmed',
-    text: 'We check the packaging suits what you are actually packing — hot, oily, frozen or wet.',
+    title: 'Correct grade checked',
+    text: 'Tell us what you pack. We help match the item to hot, oily, frozen or wet food.',
   },
   {
-    title: 'Samples first',
-    text: 'Test size, sturdiness and fit with your own food before committing to a volume order.',
+    title: 'Samples before volume',
+    text: 'Check size, fit and sturdiness with your own food before placing a larger order.',
   },
 ];
 
@@ -24,10 +24,10 @@ const trustPoints = ['Restaurants', 'Cafes', 'Bakeries', 'Delis'];
   <div class="container">
     <div class="section-heading" data-reveal>
       <span class="eyebrow">Packaging lines</span>
-      <h2 id="products-title">Everything your kitchen sends out the door.</h2>
+      <h2 id="products-title">Packaging for food that leaves your counter.</h2>
       <p>
-        Containers, cups, bottles, bags and cartons for food and beverage businesses across Nairobi —
-        supplied plain or printed with your own branding.
+        Containers, cups, bottles, bags and cartons for Nairobi food businesses. Choose stock items
+        or ask for printed packaging with your logo.
       </p>
     </div>
 
@@ -48,10 +48,9 @@ const trustPoints = ['Restaurants', 'Cafes', 'Bakeries', 'Delis'];
               class="category-showcase__image"
               widths={[240, 400, 600, 800]}
               sizes="(max-width: 1080px) 50vw, 33vw"
-              loading={index < 2 ? 'eager' : 'lazy'}
+              loading="lazy"
               tileClass={index % 2 === 1 ? 'packshot--warm' : undefined}
             />
-            <span class="category-showcase__overlay"></span>
             <span class="category-showcase__content">
               <span class="category-showcase__eyebrow">{category.eyebrow}</span>
               <span class="category-showcase__title">{category.title}</span>
@@ -79,10 +78,10 @@ const trustPoints = ['Restaurants', 'Cafes', 'Bakeries', 'Delis'];
   <div class="container why-us__container">
     <div class="section-heading section-heading--left why-us__heading" data-reveal>
       <span class="eyebrow">Why choose us</span>
-      <h2 id="why-us-title">Packaging that fits your food and carries your name.</h2>
+      <h2 id="why-us-title">Practical packaging support before you order.</h2>
       <p>
-        Talk to a real person, get the grade checked against what you are packing, and order plain or
-        custom-printed packaging without working through a complicated checkout.
+        Speak to a person, confirm the right packaging grade, and get clear pricing for plain or
+        branded options before you commit.
       </p>
 
       <div class="why-us__proof" aria-label="Businesses we supply">

@@ -4,8 +4,6 @@ import Footer from '../components/Footer.astro';
 import WhatsAppFloat from '../components/WhatsAppFloat.astro';
 import Seo from '../components/Seo.astro';
 
-// Imported here (not linked from /public) so Astro bundles, minifies and
-// fingerprints them into a single stylesheet instead of 7 blocking requests.
 import '../styles/global.css';
 import '../styles/navbar.css';
 import '../styles/hero.css';
@@ -27,8 +25,6 @@ interface Props {
   itemList?: string[];
 }
 
-// Hero images are rendered by <Image> with fetchpriority="high", so the preload
-// scanner finds them in the markup — no hand-written <link rel="preload"> needed.
 const seo = Astro.props;
 ---
 
@@ -44,30 +40,8 @@ const seo = Astro.props;
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#14452e" />
+    <meta name="theme-color" content="#0f3f2b" />
     <meta name="apple-mobile-web-app-title" content="Asnapet" />
-
-    <!-- Fonts: preconnect + a non-blocking stylesheet, rather than an @import
-         inside CSS (which serialises the font request behind the CSS parse). -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rubik:wght@500;600;700;800&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rubik:wght@500;600;700;800&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rubik:wght@500;600;700;800&display=swap"
-      />
-    </noscript>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -79,8 +53,6 @@ const seo = Astro.props;
     <WhatsAppFloat />
 
     <script>
-      // Reveal-on-scroll. Opt-in per element via [data-reveal]; elements are
-      // shown immediately if IntersectionObserver or motion is unavailable.
       const reveal = () => {
         const targets = document.querySelectorAll('[data-reveal]');
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
