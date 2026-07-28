@@ -149,17 +149,21 @@
   }
 
   .site-footer__container {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-4);
+  }
+
+  .site-footer__brand-col {
+    grid-column: 1 / -1;
   }
 
   .site-footer__hours {
-    grid-template-columns: 1fr;
-    gap: 0;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-1) var(--space-3);
   }
 
   .site-footer__hours span:nth-child(odd) {
-    margin-top: var(--space-2);
+    margin-top: 0;
   }
 
   .site-footer__wa {
