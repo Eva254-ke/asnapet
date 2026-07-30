@@ -204,12 +204,12 @@
 
 @media (max-width: 720px) {
   .hero {
-    min-height: 520px;
+    min-height: clamp(390px, calc(100svh - 245px), 450px);
     margin-top: 0;
   }
 
   .hero__container {
-    padding: 70px 0 78px;
+    padding: 46px 0 58px;
   }
 
   .hero__title {
@@ -219,19 +219,28 @@
 
   .hero__subtitle {
     max-width: 31ch;
-    font-size: 0.96rem;
-    line-height: 1.55;
+    margin-top: 16px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .hero__actions {
+    margin-top: 20px;
   }
 
   .hero__actions .btn {
     width: auto;
-    min-height: 44px;
-    padding: 12px 40px;
+    min-height: 42px;
+    padding: 10px 34px;
     border: 0;
     border-radius: 3px;
     background: #128c88;
     color: #ffffff;
     font-size: 19px;
+  }
+
+  .hero__dots {
+    bottom: 18px;
   }
 
   .hero__nav--prev {
@@ -242,4 +251,5 @@
     right: 0;
   }
 }
+
 

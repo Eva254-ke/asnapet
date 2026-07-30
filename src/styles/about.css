@@ -83,7 +83,7 @@
 
 @media (max-width: 680px) {
   .about {
-    padding: var(--space-16) 0;
+    padding: 34px 0 var(--space-16);
   }
 
   .about__title {
@@ -100,3 +100,4 @@
     min-width: 142px;
   }
 }
+
