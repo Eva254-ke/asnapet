@@ -88,14 +88,24 @@ import heroImageSecond from '../assets/images/sheddys-snacks.jpg';
     let active = 0;
     let timer;
 
-    const showSlide = (index) => {
-      active = (index + slides.length) % slides.length;
-      const slide = slides[active];
+    const setCopy = (slide) => {
       if (text) text.textContent = slide.text;
       if (cta) {
         cta.setAttribute('href', slide.href);
         cta.textContent = slide.cta;
       }
+    };
+
+    const animateCopy = () => {
+      hero.classList.remove('is-copy-visible');
+      window.setTimeout(() => hero.classList.add('is-copy-visible'), prefersReducedMotion ? 0 : 90);
+    };
+
+    const showSlide = (index) => {
+      active = (index + slides.length) % slides.length;
+      const slide = slides[active];
+      setCopy(slide);
+      animateCopy();
       dots.forEach((dot, dotIndex) => {
         const isActive = dotIndex === active;
         dot.classList.toggle('is-active', isActive);
@@ -135,6 +145,7 @@ import heroImageSecond from '../assets/images/sheddys-snacks.jpg';
     hero.addEventListener('focusin', stopAuto);
     hero.addEventListener('focusout', startAuto);
 
+    window.setTimeout(() => hero.classList.add('is-copy-visible'), prefersReducedMotion ? 0 : 360);
     startAuto();
   }
 </script>

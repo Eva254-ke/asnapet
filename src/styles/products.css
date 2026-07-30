@@ -145,7 +145,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.18);
 }
 
 .why-us__container {
@@ -154,15 +154,15 @@
 }
 
 .why-us__card {
-  width: min(100%, 560px);
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
+  width: min(100%, 590px);
+  padding: 46px 42px 44px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(0, 128, 128, 0.76), rgba(0, 111, 111, 0.54));
   color: #ffffff;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
 }
 
 .why-us__card h2 {
@@ -250,7 +250,7 @@
 
   .why-us__card {
     width: min(100%, 560px);
-    padding: 0;
+    padding: 34px 24px;
   }
 
   .why-us__card h2 {

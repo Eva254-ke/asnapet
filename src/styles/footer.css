@@ -79,10 +79,11 @@
 
 .site-footer__bottom {
   margin-top: 54px;
-  padding: 18px 0;
-  background: #0b7e77;
-  color: #ffffff;
+  padding: 18px 16px;
+  background: #ffcc00;
+  color: #1d1d1d;
   font-size: 14px;
+  text-align: center;
 }
 
 .site-footer__bottom p {
