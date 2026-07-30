@@ -8,9 +8,9 @@
 export const business = {
   name: 'Asnapet Treasures',
   legalName: 'Asnapet Treasures Ltd',
-  tagline: 'Food & beverage packaging, supplied across Nairobi',
+  tagline: 'Food and beverage supplies you can count on',
   description:
-    'Asnapet Treasures is a registered Kenyan supplier of food and beverage packaging — takeaway containers, cups and lids, bottles, pouches, paper bags, bakery cartons and custom-branded packaging — serving restaurants, cafes, bakeries, delis and food processors across Nairobi.',
+    'Asnapet Treasures supplies quality food, beverage and household essentials to retailers, hotels, restaurants, offices and families across Nairobi.',
 
   phone: '+254707429706',
   phoneDisplay: '+254 707 429706',
@@ -24,7 +24,6 @@ export const business = {
   country: 'KE',
   countryName: 'Kenya',
 
-  // Kahawa Wendani, Nairobi — used for geo meta tags and LocalBusiness schema.
   latitude: -1.1876,
   longitude: 36.9226,
 
@@ -36,7 +35,6 @@ export const business = {
     { days: ['Saturday'], opens: '08:00', closes: '16:00' },
   ],
 
-  /** Areas we actively supply — feeds both the footer and `areaServed` schema. */
   areasServed: [
     'Nairobi',
     'Kahawa Wendani',
@@ -48,10 +46,6 @@ export const business = {
     'Roysambu',
   ],
 
-  /**
-   * Social profiles. Empty strings are filtered out of `sameAs` so the schema
-   * never advertises a profile that does not exist yet.
-   */
   social: {
     facebook: '',
     instagram: '',
@@ -59,60 +53,49 @@ export const business = {
   },
 } as const;
 
-/** Build a prefilled WhatsApp deep link. */
 export function whatsappLink(message: string): string {
   return `https://wa.me/${business.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
 export const waLinks = {
-  catalog: whatsappLink('Hello Asnapet Treasures, I would like to request your packaging catalog and price list.'),
-  takeaway: whatsappLink('Hello Asnapet Treasures, I am interested in your takeaway packaging range.'),
-  fullCatalog: whatsappLink('Hello Asnapet Treasures, I would like the full packaging catalog and price list.'),
+  catalog: whatsappLink('Hello Asnapet Treasures, I would like to request your product catalog and price list.'),
+  takeaway: whatsappLink('Hello Asnapet Treasures, I am interested in your food and beverage supply range.'),
+  fullCatalog: whatsappLink('Hello Asnapet Treasures, I would like the full food and beverage catalog and price list.'),
   quote: whatsappLink('Hello Asnapet Treasures, I would like a quote. Here is what I need:'),
-  branding: whatsappLink('Hello Asnapet Treasures, I would like a quote for custom-branded packaging.'),
-  samples: whatsappLink('Hello Asnapet Treasures, I would like to request samples before ordering.'),
+  branding: whatsappLink('Hello Asnapet Treasures, I would like a quote for wholesale supply.'),
+  samples: whatsappLink('Hello Asnapet Treasures, I would like to confirm product availability before ordering.'),
 };
 
-/**
- * Shared FAQ content — rendered on the page and emitted as FAQPage JSON-LD.
- *
- * NOTE: these answers deliberately avoid stating specific minimum order
- * quantities, lead times or unit prices, because those are commercial terms
- * only the business can confirm. Because this content is emitted as FAQPage
- * structured data, an invented figure here would surface as a factual claim in
- * Google results. Replace the "confirmed when you enquire" phrasing with real
- * numbers once they are settled.
- */
 export const faqs = [
   {
-    question: 'Do you supply custom-branded packaging?',
+    question: 'Do you supply both retail and wholesale customers?',
     answer:
-      'Yes. We supply printed and branded packaging — cups, containers, paper bags, labels and sleeves — using your own artwork or logo. Send us the design along with the item and quantity you need, and we will confirm the print options, minimum quantity and lead time before anything is committed.',
+      'Yes. We serve supermarkets, shops, hotels, restaurants, offices and family buyers. Send the items and quantities you need and we will confirm availability and pricing.',
   },
   {
     question: 'What are your minimum order quantities?',
     answer:
-      'Stock lines can be bought in small quantities, including single packs for collection. Custom-printed packaging carries a minimum quantity that depends on the item and the print method, so we confirm it against your specific order rather than quoting a blanket figure.',
+      'Minimums depend on the product and whether the order is retail or wholesale. We confirm the exact quantity before you commit.',
   },
   {
-    question: 'Is your packaging food-grade and safe for hot food?',
+    question: 'Are your food and beverage products safe?',
     answer:
-      'We source food-contact packaging through established manufacturers and distributors. Heat tolerance varies by item — a paper cup, a bagasse clamshell and a PET container behave very differently with hot or oily food. Tell us what you are packing and we will confirm the correct grade for that use.',
+      'We source through trusted supplier channels and focus on quality, sealed and properly handled products. Availability and brands may vary, so we confirm details when you enquire.',
   },
   {
-    question: 'Do you stock biodegradable or eco-friendly packaging?',
+    question: 'Which product categories do you handle?',
     answer:
-      'Yes, where it is available for the item you need. Kraft paper bags and boxes, bagasse containers and wooden cutlery are the most commonly requested alternatives to plastic. We will tell you honestly which lines have a genuine eco option and which do not.',
+      'Our main categories include drinks, juices, cereals, grains, dairy items, sauces, condiments, snacks and canned foods.',
   },
   {
-    question: 'Can I get samples before placing a large order?',
+    question: 'Can you source an item that is not listed?',
     answer:
-      'Yes. For most stock lines we can provide samples so you can check size, sturdiness and fit with your own food before committing to volume. Ask for samples when you send your enquiry.',
+      'Yes, where our supplier network can provide it. Send the product name, size, brand preference and quantity, and we will confirm if we can source it.',
   },
   {
     question: 'Do you deliver, and which areas do you cover?',
     answer:
-      'We deliver across Nairobi, with fastest turnaround around Kahawa Wendani, Kahawa Sukari, Kasarani, Roysambu, Githurai, Ruiru and the wider Thika Road corridor. Deliveries outside these areas are arranged on request. Orders above KSh 2,000 are delivered free within our core Nairobi zones.',
+      'We deliver across Nairobi, with fastest turnaround around Kahawa Wendani, Kahawa Sukari, Kasarani, Roysambu, Githurai, Ruiru and the wider Thika Road corridor. Deliveries outside these areas are arranged on request.',
   },
   {
     question: 'What payment methods do you accept?',

@@ -1,0 +1,152 @@
+---
+const testimonials = [
+  {
+    quote: 'Their wide variety of products makes our work easy. Highly recommended.',
+    name: 'David O.',
+    role: 'Wholesale Distributor',
+    rating: 4,
+  },
+  {
+    quote: 'Excellent prices, great communication, and reliable service. Asnapet Treasures is simply the best!',
+    name: 'Grace M.',
+    role: 'Retail Shop Owner',
+    rating: 4,
+  },
+  {
+    quote: 'We rely on Asnapet Treasures for our restaurant supplies. Deliveries are always on time and the products are always fresh.',
+    name: 'John K.',
+    role: 'Hotel Procurement Officer',
+    rating: 5,
+  },
+  {
+    quote: 'Asnapet Treasures has been our go-to supplier for over two years. Their consistency and product quality are unmatched.',
+    name: 'Mary W.',
+    role: 'Supermarket Manager',
+    rating: 5,
+  },
+];
+---
+
+<section class="testimonials section-lazy" id="testimonials" aria-labelledby="testimonials-title" data-testimonials>
+  <div class="container testimonials__container">
+    <div class="section-heading" data-reveal>
+      <span class="eyebrow">Customer Testimonials</span>
+      <h2 id="testimonials-title">Customer Testimonials</h2>
+    </div>
+
+    <div class="testimonials__stage" data-reveal>
+      <button class="testimonials__nav testimonials__nav--prev" type="button" aria-label="Previous testimonial" data-testimonial-prev>
+        <span aria-hidden="true">&lt;</span>
+      </button>
+
+      <div class="testimonials__viewport" aria-live="polite">
+        <div class="testimonials__track" data-testimonial-track>
+          {
+            testimonials.map((item, index) => (
+              <article class="testimonial-card" data-testimonial-slide aria-hidden={index === 0 ? 'false' : 'true'}>
+
+                <h3>{item.name}, {item.role}</h3>
+                <p class="testimonial-card__quote">{item.quote}</p>
+                <div class="testimonial-card__rating" aria-label={`${item.rating} out of 5 stars`}>
+                  {Array.from({ length: 5 }).map((_, starIndex) => (
+                    <svg class:list={['testimonial-card__star', starIndex < item.rating ? 'is-filled' : undefined]} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                      <path d="M12 2.8l2.8 5.7 6.3.9-4.6 4.5 1.1 6.3-5.6-3-5.6 3 1.1-6.3-4.6-4.5 6.3-.9L12 2.8z" />
+                    </svg>
+                  ))}
+                </div>
+                <div class="testimonial-card__person">
+                  <h4>{item.name}</h4>
+                  <p>{item.role}</p>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <button class="testimonials__nav testimonials__nav--next" type="button" aria-label="Next testimonial" data-testimonial-next>
+        <span aria-hidden="true">&gt;</span>
+      </button>
+    </div>
+
+    <div class="testimonials__dots" role="tablist" aria-label="Testimonials">
+      {
+        testimonials.map((_, index) => (
+          <button
+            class:list={['testimonials__dot', index === 0 ? 'is-active' : undefined]}
+            type="button"
+            aria-label={`Show testimonial ${index + 1}`}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            data-testimonial-dot={index}
+          ></button>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const testimonialsRoot = document.querySelector('[data-testimonials]');
+
+  if (testimonialsRoot) {
+    const track = testimonialsRoot.querySelector('[data-testimonial-track]');
+    const slides = Array.from(testimonialsRoot.querySelectorAll('[data-testimonial-slide]'));
+    const dots = Array.from(testimonialsRoot.querySelectorAll('[data-testimonial-dot]'));
+    const prev = testimonialsRoot.querySelector('[data-testimonial-prev]');
+    const next = testimonialsRoot.querySelector('[data-testimonial-next]');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let active = 0;
+    let timer;
+
+    const showTestimonial = (index) => {
+      active = (index + slides.length) % slides.length;
+      if (track) track.style.transform = `translateX(-${active * 100}%)`;
+
+      slides.forEach((slide, slideIndex) => {
+        slide.setAttribute('aria-hidden', String(slideIndex !== active));
+      });
+
+      dots.forEach((dot, dotIndex) => {
+        const isActive = dotIndex === active;
+        dot.classList.toggle('is-active', isActive);
+        dot.setAttribute('aria-selected', String(isActive));
+      });
+    };
+
+    const stopAuto = () => {
+      if (timer) window.clearInterval(timer);
+    };
+
+    const startAuto = () => {
+      stopAuto();
+      if (!prefersReducedMotion) {
+        timer = window.setInterval(() => showTestimonial(active + 1), 3000);
+      }
+    };
+
+    prev?.addEventListener('click', () => {
+      showTestimonial(active - 1);
+      startAuto();
+    });
+
+    next?.addEventListener('click', () => {
+      showTestimonial(active + 1);
+      startAuto();
+    });
+
+    dots.forEach((dot, dotIndex) => {
+      dot.addEventListener('click', () => {
+        showTestimonial(dotIndex);
+        startAuto();
+      });
+    });
+
+    testimonialsRoot.addEventListener('mouseenter', stopAuto);
+    testimonialsRoot.addEventListener('mouseleave', startAuto);
+    testimonialsRoot.addEventListener('focusin', stopAuto);
+    testimonialsRoot.addEventListener('focusout', startAuto);
+
+    showTestimonial(0);
+    startAuto();
+  }
+</script>

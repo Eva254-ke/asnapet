@@ -1,60 +1,29 @@
 ---
 import { Image } from 'astro:assets';
-import aboutImage from '../assets/images/pack-about-warehouse.webp';
-
-const facts = [
-  {
-    title: 'Supplier checks',
-    text: 'Packaging is sourced through established manufacturers and distributors.',
-  },
-  {
-    title: 'Clear records',
-    text: 'Confirmed orders come with straightforward communication and receipts.',
-  },
-  {
-    title: 'Delivery support',
-    text: 'Dispatch is coordinated for Nairobi kitchens, counters and processors.',
-  },
-];
+import aboutImage from '../assets/images/sheddys-snacks.jpg';
 ---
 
 <section class="about section-lazy" id="about" aria-labelledby="about-title">
   <div class="container about__container">
-    <div class="about__image-wrap" data-reveal>
+    <div class="about__content" data-reveal>
+      <h2 class="about__title" id="about-title">About Us</h2>
+      <p class="about__text">
+        Asnapet Treasures is a proud international food &amp; beverage company importing from Asia and other East African countries.<br />
+        We supply supermarkets, wholesalers, retailers, hotels, and restaurants with trusted food and beverage brands that meet both local and international standards.
+      </p>
+      <a href="/products" class="about__button">Read More</a>
+    </div>
+
+    <div class="about__image-wrap" data-reveal data-reveal-delay="1">
       <Image
         src={aboutImage}
-        alt="Cartons and shrink-wrapped pallets racked on labelled warehouse shelving"
-        widths={[400, 640, 900]}
+        alt="Assortment of packaged snacks"
+        widths={[400, 640, 980, 1280]}
         sizes="(max-width: 980px) 100vw, 40vw"
         loading="lazy"
         decoding="async"
       />
     </div>
-
-    <div class="about__content" data-reveal data-reveal-delay="1">
-      <span class="eyebrow">About Asnapet</span>
-      <h2 class="about__title" id="about-title">
-        A packaging partner for Nairobi food businesses.
-      </h2>
-      <p class="about__text">
-        Asnapet Treasures is a registered Kenyan enterprise supplying food and beverage packaging
-        through established manufacturer and distributor relationships.
-      </p>
-      <p class="about__text">
-        We keep the process simple: confirm what you are packing, recommend the right grade, quote
-        plain or branded options, issue receipts and coordinate delivery within Nairobi.
-      </p>
-
-      <div class="about__facts" aria-label="Business strengths">
-        {
-          facts.map((fact) => (
-            <div class="about__fact-item">
-              <h3>{fact.title}</h3>
-              <p>{fact.text}</p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
   </div>
 </section>
+

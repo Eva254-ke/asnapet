@@ -1,41 +1,43 @@
 ---
 import PackShot from './PackShot.astro';
-import { categories } from '../data/categories';
+import whyImage from '../assets/images/sheddys-milk.jpg';
+import { homeCategories } from '../data/categories';
 
 const strengths = [
   {
-    title: 'Branding handled',
-    text: 'We quote cups, bags, labels and containers with your logo when branding is needed.',
+    title: 'Quality Assurance',
+    text: 'We distribute only trusted and certified brands.',
   },
   {
-    title: 'Correct grade checked',
-    text: 'Tell us what you pack. We help match the item to hot, oily, frozen or wet food.',
+    title: 'Reliable Deliveries',
+    text: 'We guarantee timely and consistent supply.',
   },
   {
-    title: 'Samples before volume',
-    text: 'Check size, fit and sturdiness with your own food before placing a larger order.',
+    title: 'Competitive Prices',
+    text: 'Affordable rates for both wholesale and retail customers.',
+  },
+  {
+    title: 'Excellent Customer Service',
+    text: 'Our team is always ready to support and respond quickly.',
   },
 ];
-
-const trustPoints = ['Restaurants', 'Cafes', 'Bakeries', 'Delis'];
 ---
 
 <section class="products section-lazy" id="products" aria-labelledby="products-title">
   <div class="container">
     <div class="section-heading" data-reveal>
-      <span class="eyebrow">Packaging lines</span>
-      <h2 id="products-title">Packaging for food that leaves your counter.</h2>
+      <span class="eyebrow">Our Products</span>
+      <h2 id="products-title">Our Products</h2>
       <p>
-        Containers, cups, bottles, bags and cartons for Nairobi food businesses. Choose stock items
-        or ask for printed packaging with your logo.
+        Asnapet Treasures specializes in distributing a wide variety of food and beverage products, including:
       </p>
     </div>
 
     <div class="products__grid">
       {
-        categories.map((category, index) => (
+        homeCategories.map((category, index) => (
           <a
-            class="category-showcase"
+            class="product-card"
             href={category.href}
             aria-label={`View ${category.title}`}
             data-reveal
@@ -45,20 +47,15 @@ const trustPoints = ['Restaurants', 'Cafes', 'Bakeries', 'Delis'];
               icon={category.icon}
               image={category.image}
               alt={category.alt}
-              class="category-showcase__image"
+              class="product-card__image"
               widths={[240, 400, 600, 800]}
               sizes="(max-width: 1080px) 50vw, 33vw"
               loading="lazy"
               tileClass={index % 2 === 1 ? 'packshot--warm' : undefined}
             />
-            <span class="category-showcase__content">
-              <span class="category-showcase__eyebrow">{category.eyebrow}</span>
-              <span class="category-showcase__title">{category.title}</span>
-              <span class="category-showcase__text">{category.description}</span>
-              <span class="category-showcase__link">
-                View range
-                <span class="btn__arrow" aria-hidden="true">&rarr;</span>
-              </span>
+            <span class="product-card__content">
+              <span class="product-card__title">{category.title}</span>
+              <span class="product-card__text">{category.description}</span>
             </span>
           </a>
         ))
@@ -67,37 +64,33 @@ const trustPoints = ['Restaurants', 'Cafes', 'Bakeries', 'Delis'];
 
     <div class="products__cta-row" data-reveal>
       <a class="btn btn-primary products__read-more" href="/products">
-        See all packaging lines
-        <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+        Read More
       </a>
     </div>
   </div>
 </section>
 
-<section class="why-us section-lazy" id="why-us" aria-labelledby="why-us-title">
-  <div class="why-us__container">
-    <div class="section-heading section-heading--left why-us__heading" data-reveal>
-      <span class="eyebrow">Why choose us</span>
-      <h2 id="why-us-title">Practical packaging support before you order.</h2>
-      <p>
-        Speak to a person, confirm the right packaging grade, and get clear pricing for plain or
-        branded options before you commit.
-      </p>
+<section class="why-us section-lazy" id="why-us" aria-labelledby="why-us-title" style={`--why-bg: url(${whyImage.src})`}>
+  <div class="why-us__overlay" aria-hidden="true"></div>
+  <div class="container why-us__container">
+    <div class="why-us__card" data-reveal>
+      <h2 id="why-us-title">Why Choose Asnapet Treasures</h2>
 
-      <div class="why-us__proof" aria-label="Businesses we supply">
-        {trustPoints.map((point) => <span>{point}</span>)}
+      <div class="why-us__list">
+        {
+          strengths.map((item) => (
+            <article class="why-card">
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))
+        }
       </div>
-    </div>
 
-    <div class="why-us__grid">
-      {
-        strengths.map((item, index) => (
-          <article class="why-card" data-reveal data-reveal-delay={String(index + 1)}>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </article>
-        ))
-      }
+      <a class="btn btn-primary why-us__read-more" href="/products">
+        Read More
+      </a>
     </div>
   </div>
 </section>
+

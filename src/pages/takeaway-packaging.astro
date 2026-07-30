@@ -1,102 +1,25 @@
 ---
 import Layout from '../layout/Layout.astro';
 import PackShot from '../components/PackShot.astro';
+import { categories, categoryNames } from '../data/categories';
 import { waLinks, business } from '../data/site';
-import type { PackIcon } from '../data/categories';
 
-import takeawayHero from '../assets/images/pack-takeaway-hero.webp';
-
-/**
- * Five of the six lines below are the same products as the matching entries in
- * categories.ts, so they deliberately share those photos rather than introduce
- * near-duplicate images of the same thing. Only the lunch box shot is specific
- * to this page.
- */
-import clamshells from '../assets/images/pack-takeaway-containers.jpg';
-import lunchBoxes from '../assets/images/pack-lunch-boxes.webp';
-import cupsLidsStraws from '../assets/images/pack-cups-lids-straws.webp';
-import carrierBags from '../assets/images/pack-paper-bags.webp';
-import cutleryNapkins from '../assets/images/pack-cutlery-serviceware.webp';
-import brandedPackaging from '../assets/images/pack-labels-branding.webp';
-
-const heroHighlights = ['Clamshells', 'Lunch boxes', 'Cups & lids', 'Carrier bags'];
-
-/**
- * Takeaway-specific lines. Photos are added the same way as in categories.ts:
- * import the file, then set `image` and `alt` on the entry.
- */
-const subcategories: {
-  title: string;
-  description: string;
-  icon: PackIcon;
-  image?: ImageMetadata;
-  alt?: string;
-  items: string[];
-}[] = [
-  {
-    title: 'Hinged Clamshells',
-    description: 'Single and multi-compartment clamshells that close without a separate lid.',
-    icon: 'container',
-    image: clamshells,
-    alt: 'Stacked bagasse clamshell boxes, one open with a compartmented meal inside',
-    items: ['Bagasse', 'Plastic', 'Compartment'],
-  },
-  {
-    title: 'Lunch Boxes & Bowls',
-    description: 'Sealable boxes and round bowls for rice, stews, salads and hot mains.',
-    icon: 'container',
-    image: lunchBoxes,
-    alt: 'Kitchen worker carrying a stack of kraft lunch boxes topped with a lidded soup cup',
-    items: ['Sealable lids', 'Round bowls', 'Deep boxes'],
-  },
-  {
-    title: 'Cups, Lids & Straws',
-    description: 'Hot and cold drink cups with matching lids, sleeves and paper straws.',
-    icon: 'cup',
-    image: cupsLidsStraws,
-    alt: 'Three logo-printed drink cups with dome and sip lids and a straw',
-    items: ['Paper cups', 'PET cups', 'Dome lids'],
-  },
-  {
-    title: 'Carrier & Kraft Bags',
-    description: 'Handled carrier bags and kraft bags that hold a full order without tearing.',
-    icon: 'bag',
-    image: carrierBags,
-    alt: 'A plain kraft paper carrier bag with twisted paper handles',
-    items: ['Twisted handle', 'Flat kraft', 'Grease-resistant'],
-  },
-  {
-    title: 'Cutlery & Napkins',
-    description: 'Wooden and plastic cutlery, serviettes, portion cups and food gloves.',
-    icon: 'cutlery',
-    image: cutleryNapkins,
-    alt: 'Wooden sporks standing in a holder beside folded napkin wraps',
-    items: ['Wooden cutlery', 'Serviettes', 'Portion cups'],
-  },
-  {
-    title: 'Branded Packaging',
-    description: 'Your logo printed onto cups, bags, containers, labels and tamper seals.',
-    icon: 'label',
-    image: brandedPackaging,
-    alt: 'Rolls of printed labels beside coffee bags, jars and tubs wearing the finished labels',
-    items: ['Printed cups', 'Logo bags', 'Tamper seals'],
-  },
-];
-
-const serviceSteps = [
-  { title: 'Tell us what you pack', text: 'Share the dishes and portion sizes you send out.' },
-  { title: 'We confirm the grade', text: 'We match the packaging to hot, oily, wet or frozen food.' },
-  { title: 'Samples, then supply', text: 'Test it with your own food, then order plain or branded.' },
+const featured = categories.slice(0, 6);
+const orderSteps = [
+  { title: 'Send your list', text: 'Share product names, sizes, brand preferences and quantities.' },
+  { title: 'We confirm stock', text: 'We check availability, pricing and suitable alternatives where needed.' },
+  { title: 'Delivery is arranged', text: 'Once confirmed, we coordinate payment and delivery around Nairobi.' },
 ];
 ---
 
 <Layout
-  title="Takeaway Packaging in Nairobi — Containers, Cups & Carrier Bags"
-  description="Takeaway packaging from Asnapet Treasures: hinged clamshells, lunch boxes, bowls, cups and lids, carrier bags, cutlery and custom-branded packaging. Supplied across Nairobi with samples before you commit."
-  itemList={subcategories.map((s) => s.title)}
+  title="Product Supply in Nairobi - Food, Drinks & Essentials"
+  description="Asnapet Treasures supplies food, beverages, cereals, grains, dairy products, snacks, canned foods and household essentials to Nairobi customers."
+  itemList={categoryNames}
+  noindex={true}
   breadcrumbs={[
     { name: 'Home', path: '/' },
-    { name: 'Takeaway Packaging', path: '/takeaway-packaging' },
+    { name: 'Product Supply', path: '/takeaway-packaging' },
   ]}
 >
   <header class="category-header category-header--segment">
@@ -105,30 +28,29 @@ const serviceSteps = [
         <nav class="breadcrumbs" aria-label="Breadcrumb">
           <ol>
             <li><a href="/">Home</a></li>
-            <li aria-current="page">Takeaway Packaging</li>
+            <li aria-current="page">Product Supply</li>
           </ol>
         </nav>
 
-        <span class="eyebrow">Takeaway range</span>
-        <h1 class="category-header__title">Packaging that survives the trip to your customer.</h1>
+        <span class="eyebrow">Product supply</span>
+        <h1 class="category-header__title">Reliable food and beverage supply for Nairobi buyers.</h1>
         <p class="category-header__subtitle">
-          Clamshells, lunch boxes, bowls, cups, carrier bags and cutlery for restaurants, cafes and
-          delivery kitchens &mdash; with the grade checked against the food you actually send out.
+          Asnapet Treasures helps shops, hotels, restaurants, offices and homes source everyday
+          products with clear availability checks, practical pricing and responsive delivery support.
         </p>
         <div class="segment-hero__actions">
-          <a href={waLinks.takeaway} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-            Request Takeaway Catalog
-            <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          <a href={waLinks.fullCatalog} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            Request Product Catalog
           </a>
-          <a href="#segment-sections" class="btn btn-ghost">Browse Range</a>
+          <a href="/products" class="btn btn-ghost">Browse Products</a>
         </div>
       </div>
 
-      <div class="segment-hero__visual" aria-label="Featured takeaway packaging">
+      <div class="segment-hero__visual" aria-label="Featured food and beverage supply categories">
         <PackShot
-          icon="container"
-          image={takeawayHero}
-          alt="Kraft carrier bag, capped drink bottles, soup cups, a noodle box and wooden cutlery"
+          icon="bottle"
+          image={featured[0]?.image}
+          alt={featured[0]?.alt}
           class="segment-hero__image"
           widths={[400, 640, 900]}
           sizes="(max-width: 980px) 100vw, 42vw"
@@ -136,9 +58,9 @@ const serviceSteps = [
           tileClass="packshot--hero"
         />
         <div class="segment-hero__panel">
-          <span>Popular lines</span>
+          <span>Popular categories</span>
           <div class="segment-hero__chips">
-            {heroHighlights.map((item) => <span>{item}</span>)}
+            {featured.slice(0, 4).map((item) => <span>{item.title}</span>)}
           </div>
         </div>
       </div>
@@ -148,17 +70,17 @@ const serviceSteps = [
   <section class="category-content section-lazy segment-content" aria-labelledby="segment-sections">
     <div class="container">
       <div class="section-heading section-heading--left segment-heading" data-reveal>
-        <span class="eyebrow">Available lines</span>
-        <h2 id="segment-sections">Takeaway packaging grouped for faster ordering.</h2>
+        <span class="eyebrow">Available categories</span>
+        <h2 id="segment-sections">Core product lines for repeat ordering.</h2>
         <p>
-          Browse the main lines, then send the list you need so we can confirm sizes, current
-          availability and whether a branded version is worth it at your volume.
+          These are the main categories customers request most often. Send your list and we will
+          confirm current brands, sizes and delivery timing before you commit.
         </p>
       </div>
 
       <div class="subcategory-grid subcategory-grid--segment">
         {
-          subcategories.map((sub, index) => (
+          featured.map((sub, index) => (
             <article
               class="subcategory-card segment-card"
               data-reveal
@@ -177,12 +99,9 @@ const serviceSteps = [
                 />
               </div>
               <div class="subcategory-card__content segment-card__content">
-                <span class="segment-card__label">Takeaway line</span>
+                <span class="segment-card__label">Supply category</span>
                 <h3 class="subcategory-card__title">{sub.title}</h3>
-                <p class="subcategory-card__text">{sub.description}</p>
-                <div class="segment-card__items" aria-label={`${sub.title} examples`}>
-                  {sub.items.map((item) => <span>{item}</span>)}
-                </div>
+                <p class="subcategory-card__text">{sub.detail}</p>
               </div>
             </article>
           ))
@@ -192,11 +111,11 @@ const serviceSteps = [
       <section class="segment-service" aria-labelledby="segment-service-title">
         <div class="section-heading section-heading--left segment-service__heading" data-reveal>
           <span class="eyebrow">How it works</span>
-          <h2 id="segment-service-title">A simple way to get the packaging right first time.</h2>
+          <h2 id="segment-service-title">A simple way to place repeat orders.</h2>
         </div>
         <div class="segment-service__steps">
           {
-            serviceSteps.map((step, index) => (
+            orderSteps.map((step, index) => (
               <article class="segment-step" data-reveal data-reveal-delay={String(index + 1)}>
                 <span class="segment-step__number">0{index + 1}</span>
                 <h3>{step.title}</h3>
@@ -210,17 +129,19 @@ const serviceSteps = [
       <section class="category-cta category-cta--segment" aria-labelledby="category-cta-title">
         <span class="eyebrow">Need something specific?</span>
         <h2 class="category-cta__title" id="category-cta-title">
-          Send your list and we will confirm sizes and pricing.
+          Send your shopping list and we will confirm what can be supplied.
         </h2>
         <p class="category-cta__text">
-          Tell us the dishes you send out and roughly how many covers a week. We will recommend sizes,
-          quote plain and branded options, and arrange samples first. Free delivery on orders over{' '}
-          {business.freeDeliveryThreshold} within Nairobi.
+          Message us with item names, pack sizes and quantities. We serve Nairobi customers from
+          {business.street} and arrange delivery across nearby areas.
         </p>
-        <a href={waLinks.samples} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-          Request samples on WhatsApp
+        <a href={waLinks.quote} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+          Send your list on WhatsApp
         </a>
       </section>
     </div>
   </section>
 </Layout>
+
+
+

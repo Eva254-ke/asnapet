@@ -1,9 +1,4 @@
 ---
-/**
- * FAQ accordion. Built on <details>/<summary> so it works without JavaScript
- * and is keyboard-operable by default. The same `faqs` array is emitted as
- * FAQPage JSON-LD by Seo.astro, keeping the copy and the schema identical.
- */
 import { faqs, waLinks } from '../data/site';
 ---
 
@@ -11,14 +6,12 @@ import { faqs, waLinks } from '../data/site';
   <div class="faq__container">
     <div class="faq__intro" data-reveal>
       <span class="eyebrow">Questions</span>
-      <h2 class="faq__title" id="faq-title">Everything you might ask before ordering.</h2>
+      <h2 class="faq__title" id="faq-title">Before you place an order.</h2>
       <p class="faq__lede">
-        Straight answers on delivery, payment and sourcing. If something is not covered here, send a
-        message and we will answer directly.
+        Quick answers about product categories, delivery, quantities and payment.
       </p>
       <a class="btn btn-ghost faq__cta" href={waLinks.quote} target="_blank" rel="noopener noreferrer">
         Ask a question
-        <span class="btn__arrow" aria-hidden="true">&rarr;</span>
       </a>
     </div>
 
@@ -50,3 +43,4 @@ import { faqs, waLinks } from '../data/site';
     </div>
   </div>
 </section>
+

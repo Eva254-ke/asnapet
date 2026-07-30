@@ -1,37 +1,25 @@
-@font-face {
-  font-family: 'Rubik';
-  src: url('/fonts/rubik-latin.woff2') format('woff2');
-  font-weight: 700 800;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Nunito Sans';
-  src: url('/fonts/nunito-sans-latin.woff2') format('woff2');
-  font-weight: 400 800;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --color-bg: #f5f6f3;
+  --color-bg: #ffffff;
   --color-surface: #ffffff;
-  --color-surface-muted: #eef2ed;
-  --color-ink: #17211c;
-  --color-ink-soft: #334139;
-  --color-muted: #66726b;
-  --color-primary: #17613f;
-  --color-primary-dark: #0f3f2b;
-  --color-primary-soft: #e5efe9;
-  --color-secondary: #b56f24;
-  --color-secondary-dark: #825019;
-  --color-secondary-light: #f0b75a;
+  --color-surface-muted: #f7f7f7;
+  --color-ink: #1d1d1d;
+  --color-ink-soft: #303030;
+  --color-muted: #696969;
+  --color-primary: #008080;
+  --color-primary-dark: #008080;
+  --color-primary-soft: #e5f3f3;
+  --color-secondary: #ffcc00;
+  --color-secondary-dark: #008080;
+  --color-secondary-light: #ffcc00;
   --color-border: #d8ded8;
   --color-border-soft: #e5e9e4;
 
   --shadow-xs: 0 1px 2px rgba(23, 33, 28, 0.06);
-  --shadow-sm: 0 4px 12px rgba(23, 33, 28, 0.08);
-  --shadow-md: 0 12px 32px rgba(23, 33, 28, 0.12);
-  --shadow-lg: 0 24px 64px rgba(23, 33, 28, 0.16);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.16);
   --shadow-soft: var(--shadow-md);
   --shadow-card: var(--shadow-sm);
 
@@ -74,7 +62,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
   font-size: 1rem;
   background: var(--color-bg);
   color: var(--color-ink);
@@ -96,7 +84,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: 'Rubik', system-ui, sans-serif;
+  font-family: 'Montserrat', system-ui, sans-serif;
   line-height: 1.08;
   letter-spacing: 0;
   text-wrap: balance;
@@ -159,26 +147,24 @@ img {
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-6);
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  font-family: inherit;
+  padding: 12px 40px;
+  border: 0;
+  border-radius: 30px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Montserrat', system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 800;
-  line-height: 1.15;
+  line-height: 1.2;
   letter-spacing: 0;
   text-align: center;
   cursor: pointer;
-  transition:
-    transform var(--dur-fast) var(--ease-out),
-    box-shadow var(--dur-mid) var(--ease-out),
-    background-color var(--dur-fast) var(--ease-out),
-    border-color var(--dur-fast) var(--ease-out),
-    color var(--dur-fast) var(--ease-out);
+  transition: all 300ms ease 0ms;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+  transform: none;
 }
 
 .btn:active {
@@ -187,14 +173,15 @@ img {
 }
 
 .btn-primary {
-  background: var(--color-primary);
-  color: #fff;
-  box-shadow: var(--shadow-sm);
+  background: #14877b;
+  color: #ffffff;
+  box-shadow: none;
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-dark);
-  box-shadow: var(--shadow-md);
+  background: #0f8e86;
+  color: #ffffff;
+  box-shadow: none;
 }
 
 .btn-secondary {
@@ -231,15 +218,6 @@ img {
   box-shadow: var(--shadow-sm);
 }
 
-.btn__arrow {
-  display: inline-block;
-  transition: transform var(--dur-mid) var(--ease-out);
-}
-
-.btn:hover .btn__arrow,
-.btn:focus-visible .btn__arrow {
-  transform: translateX(4px);
-}
 
 .eyebrow {
   display: inline-flex;
@@ -273,7 +251,7 @@ img {
 
 .section-heading h2 {
   margin-top: var(--space-4);
-  font-size: 2.9rem;
+  font-size: 2.6rem;
 }
 
 .section-heading p {
@@ -317,34 +295,41 @@ img {
 
 .whatsapp-float {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 120;
+  right: 8px;
+  bottom: 85px;
+  z-index: 99999999;
   width: 44px;
   height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 25px;
   background: #25d366;
-  color: #fff;
-  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3), 0 2px 6px rgba(23, 33, 28, 0.16);
-  transition:
-    transform var(--dur-mid) var(--ease-out),
-    box-shadow var(--dur-mid) var(--ease-out),
-    background-color var(--dur-fast) var(--ease-out);
+  color: #ffffff;
+  box-shadow: none;
+  cursor: pointer;
+  transform-origin: bottom right;
+  animation: whatsapp-entry 400ms cubic-bezier(0.25, 1, 0.5, 1) both;
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 .whatsapp-float:hover {
-  transform: translateY(-3px);
-  background: #1ebc59;
-  box-shadow: 0 10px 24px rgba(37, 211, 102, 0.38), 0 3px 10px rgba(23, 33, 28, 0.2);
+  transform: none;
+  background: #00d34d;
+  color: #f4f4f4;
+  box-shadow: none;
 }
 
 .whatsapp-float svg {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
+
+@keyframes whatsapp-entry {
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 
 @media (max-width: 980px) {
   .section-heading h2 {
@@ -375,15 +360,15 @@ img {
   }
 
   .whatsapp-float {
-    right: 16px;
-    bottom: 16px;
-    width: 40px;
-    height: 40px;
+    right: 8px;
+    bottom: 85px;
+    width: 44px;
+    height: 44px;
   }
 
   .whatsapp-float svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -407,3 +392,5 @@ img {
     transform: none;
   }
 }
+
+

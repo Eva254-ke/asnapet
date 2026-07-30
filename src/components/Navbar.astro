@@ -1,30 +1,20 @@
 ---
-import { business, waLinks } from '../data/site';
+import { business } from '../data/site';
 
 const links = [
-  { label: 'Packaging', href: '/#products' },
-  { label: 'Takeaway', href: '/takeaway-packaging' },
-  { label: 'Why Us', href: '/#why-us' },
-  { label: 'About', href: '/#about' },
-  { label: 'FAQ', href: '/#faq' },
+  { label: 'Home', href: '/#top' },
+  { label: 'About Us', href: '/#about' },
+  { label: 'Why Choose Us', href: '/#why-us' },
+  { label: 'Our Products', href: '/#products' },
+  { label: 'Testimonials', href: '/#testimonials' },
+  { label: 'Contact Us', href: '/#contact' },
 ];
 ---
 
 <nav class="navbar" id="site-nav" aria-label="Primary navigation">
   <div class="navbar__announcement">
     <div class="container navbar__announcement-inner">
-      {/* Two variants rather than one wrapping line: on a phone the strip has
-          to stay on a single row to keep its height down, and "Nairobi" is the
-          word that can go — the city is already stated all over the page. Only
-          one is ever rendered (the other is display:none, so it is out of the
-          accessibility tree too). */}
-      <span class="navbar__announcement-full">
-        Free Nairobi delivery over {business.freeDeliveryThreshold}
-      </span>
-      <span class="navbar__announcement-short">
-        Free delivery over {business.freeDeliveryThreshold}
-      </span>
-      <a href={`tel:${business.phone}`}>Call {business.phoneDisplay}</a>
+      <span>Contacts: {business.phoneDisplay}</span>
     </div>
   </div>
 
@@ -46,9 +36,6 @@ const links = [
       </ul>
 
       <div class="navbar__actions">
-        <a href={waLinks.catalog} class="navbar__cta" target="_blank" rel="noopener noreferrer">
-          Request Catalog
-        </a>
         <button
           class="navbar__mobile-toggle"
           id="mobile-menu-btn"
@@ -78,9 +65,6 @@ const links = [
             </li>
           ))
         }
-        <li>
-          <a href={waLinks.catalog} target="_blank" rel="noopener noreferrer">Request Catalog</a>
-        </li>
       </ul>
     </div>
   </div>
@@ -96,19 +80,12 @@ const links = [
       menu.classList.toggle('is-open', open);
       btn.setAttribute('aria-expanded', String(open));
       btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      // Prevent the page scrolling behind the open panel.
       document.body.classList.toggle('has-menu-open', open);
     };
 
-    btn.addEventListener('click', () => {
-      setOpen(!menu.classList.contains('is-open'));
-    });
+    btn.addEventListener('click', () => setOpen(!menu.classList.contains('is-open')));
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setOpen(false)));
 
-    menu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setOpen(false));
-    });
-
-    // Escape closes the panel and returns focus to the toggle.
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && menu.classList.contains('is-open')) {
         setOpen(false);
@@ -116,28 +93,17 @@ const links = [
       }
     });
 
-    // Close when the viewport grows past the breakpoint that hides the toggle,
-    // otherwise the panel stays open but invisible and traps focus.
     const desktop = window.matchMedia('(min-width: 820px)');
     desktop.addEventListener('change', (event) => {
       if (event.matches) setOpen(false);
     });
   }
 
-  // Condense the navbar once the user scrolls past the announcement bar.
   if (nav) {
-    const onScroll = () => {
-      nav.classList.toggle('is-scrolled', window.scrollY > 24);
-    };
-
-    // Apply the correct state first, then enable transitions on the next frame.
-    // Reloading a scrolled page would otherwise paint the expanded navbar and
-    // animate it shut, which reads as a loading glitch.
+    const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 24);
     onScroll();
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => nav.classList.add('is-ready'));
-    });
-
+    requestAnimationFrame(() => requestAnimationFrame(() => nav.classList.add('is-ready')));
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 </script>
+

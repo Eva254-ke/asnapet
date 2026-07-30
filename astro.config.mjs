@@ -14,7 +14,7 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/404'),
+      filter: (page) => !page.includes('/404') && !page.includes('/takeaway-packaging'),
       changefreq: 'weekly',
       lastmod: new Date(),
       serialize(item) {
@@ -35,3 +35,4 @@ export default defineConfig({
 
   compressHTML: true,
 });
+
