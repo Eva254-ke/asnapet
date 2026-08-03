@@ -3,6 +3,19 @@ import PackShot from './PackShot.astro';
 import whyImage from '../assets/images/sheddys-milk.jpg';
 import { homeCategories } from '../data/categories';
 
+const packagingSolutions = [
+  'Takeaway containers',
+  'Cups, lids and straws',
+  'Paper bags and bakery cartons',
+  'Pouches, films and branded labels',
+];
+
+const employeeContacts = [
+  { name: 'Riley Kamau', role: 'Catalog support' },
+  { name: 'Morgan Wanjiku', role: 'Wholesale orders' },
+  { name: 'Alex Otieno', role: 'Packaging enquiries' },
+];
+
 const strengths = [
   {
     title: 'Quality Assurance',
@@ -62,6 +75,31 @@ const strengths = [
       }
     </div>
 
+    <div class="products__support" data-reveal>
+      <div class="products__support-panel products__support-panel--accent">
+        <span class="products__support-label">Packaging solutions</span>
+        <h3>Food service packaging available with your product order.</h3>
+        <div class="products__chips">
+          {packagingSolutions.map((item) => <span>{item}</span>)}
+        </div>
+      </div>
+
+      <div class="products__support-panel">
+        <span class="products__support-label">Team contacts</span>
+        <h3>Ask the right desk for a faster response.</h3>
+        <div class="products__people">
+          {
+            employeeContacts.map((person) => (
+              <span>
+                <strong>{person.name}</strong>
+                <small>{person.role}</small>
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
     <div class="products__cta-row" data-reveal>
       <a class="btn btn-primary products__read-more" href="/products">
         Read More
@@ -93,4 +131,3 @@ const strengths = [
     </div>
   </div>
 </section>
-

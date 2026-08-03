@@ -100,6 +100,98 @@
   line-height: 1.58;
 }
 
+.products__support {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.products__support--category {
+  margin: 42px 0 0;
+}
+
+.products__support-panel {
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 26px;
+  border: 1px solid rgba(20, 135, 123, 0.16);
+  border-radius: 8px;
+  background: #f7faf9;
+}
+
+.products__support-panel--accent {
+  background: #123b37;
+  color: #ffffff;
+}
+
+.products__support-label {
+  color: #14877b;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.products__support-panel--accent .products__support-label {
+  color: #ffcc00;
+}
+
+.products__support-panel h3 {
+  max-width: 580px;
+  color: inherit;
+  font-size: 1.45rem;
+  line-height: 1.25;
+}
+
+.products__chips,
+.products__people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.products__chips span,
+.products__people span {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.products__chips span {
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.products__people span {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10px 14px;
+  background: #ffffff;
+  color: #17211c;
+  box-shadow: 0 8px 22px rgba(23, 33, 28, 0.08);
+}
+
+.products__people strong {
+  font-size: 0.94rem;
+}
+
+.products__people small {
+  margin-top: 2px;
+  color: #66736c;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .products__cta-row {
   display: flex;
   justify-content: center;
@@ -220,6 +312,10 @@
 }
 
 @media (max-width: 780px) {
+  .products__support {
+    grid-template-columns: 1fr;
+  }
+
   .why-us__container {
     justify-content: center;
   }
@@ -246,6 +342,31 @@
 
   .product-card__title {
     font-size: 30px;
+  }
+
+  .products__support {
+    margin-top: 24px;
+    gap: 14px;
+  }
+
+  .products__support-panel {
+    min-height: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .products__support-panel h3 {
+    font-size: 1.12rem;
+  }
+
+  .products__chips,
+  .products__people {
+    gap: 8px;
+  }
+
+  .products__chips span,
+  .products__people span {
+    border-radius: 8px;
   }
 
   .why-us__card {

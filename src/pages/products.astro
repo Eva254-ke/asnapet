@@ -3,11 +3,24 @@ import Layout from '../layout/Layout.astro';
 import PackShot from '../components/PackShot.astro';
 import { categories, categoryNames } from '../data/categories';
 import { waLinks, business } from '../data/site';
+
+const packagingSolutions = [
+  'Takeaway containers',
+  'Cups, lids and straws',
+  'Paper bags and bakery cartons',
+  'Pouches, films and branded labels',
+];
+
+const employeeContacts = [
+  { name: 'Riley Kamau', role: 'Catalog support' },
+  { name: 'Morgan Wanjiku', role: 'Wholesale orders' },
+  { name: 'Alex Otieno', role: 'Packaging enquiries' },
+];
 ---
 
 <Layout
   title="Our Products - Asnapet Treasures"
-  description="Browse Asnapet Treasures product categories: energy drinks, fruit juices and soft drinks, cereals, dairy products, sauces, snacks and canned foods."
+  description="Browse Asnapet Treasures product categories: energy drinks, fruit juices and soft drinks, cereals, dairy products, sauces, snacks, canned foods and packaging support."
   itemList={categoryNames}
   breadcrumbs={[
     { name: 'Home', path: '/' },
@@ -80,6 +93,31 @@ import { waLinks, business } from '../data/site';
         }
       </div>
 
+      <section class="products__support products__support--category" aria-label="Packaging solutions and team contacts" data-reveal>
+        <div class="products__support-panel products__support-panel--accent">
+          <span class="products__support-label">Packaging solutions</span>
+          <h3>Food service packaging available with your product order.</h3>
+          <div class="products__chips">
+            {packagingSolutions.map((item) => <span>{item}</span>)}
+          </div>
+        </div>
+
+        <div class="products__support-panel">
+          <span class="products__support-label">Team contacts</span>
+          <h3>Ask the right desk for a faster response.</h3>
+          <div class="products__people">
+            {
+              employeeContacts.map((person) => (
+                <span>
+                  <strong>{person.name}</strong>
+                  <small>{person.role}</small>
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
       <section class="category-cta" aria-labelledby="products-cta-title">
         <span class="eyebrow">Not listed above?</span>
         <h2 class="category-cta__title" id="products-cta-title">
@@ -96,6 +134,3 @@ import { waLinks, business } from '../data/site';
     </div>
   </section>
 </Layout>
-
-
-
