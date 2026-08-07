@@ -100,94 +100,101 @@
   line-height: 1.58;
 }
 
-.products__support {
+/* Packaging solutions -------------------------------------------------------
+   Rendered by components/PackagingSolutions.astro on / and /products. The tiles
+   reuse .subcategory-card from category.css so packaging reads as the same kind
+   of thing as a product; the overrides here only cancel the hover lift, because
+   these cards are <article>s with nowhere to navigate to. category.css is
+   imported after products.css, so those overrides need the .packaging scope to
+   win on specificity rather than source order. */
+
+.packaging {
+  margin-top: var(--space-12);
+}
+
+.packaging__heading {
+  margin-bottom: var(--space-8);
+}
+
+.packaging--center .packaging__heading {
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.packaging__heading h2 {
+  margin-top: var(--space-4);
+  color: var(--color-ink);
+  font-size: 2rem;
+}
+
+.packaging__heading p {
+  margin-top: var(--space-4);
+  color: var(--color-muted);
+  font-size: 1.08rem;
+}
+
+.packaging__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
-  gap: 18px;
-  margin-top: 34px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-6);
 }
 
-.products__support--category {
-  margin: 42px 0 0;
+.packaging__card .subcategory-card__image {
+  object-position: var(--pack-focus, 50% 50%);
 }
 
-.products__support-panel {
-  min-height: 190px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 22px;
-  padding: 26px;
-  border: 1px solid rgba(20, 135, 123, 0.16);
-  border-radius: 8px;
-  background: #f7faf9;
+.packaging .subcategory-card:hover {
+  transform: none;
+  border-color: var(--color-border-soft);
+  box-shadow: var(--shadow-xs);
 }
 
-.products__support-panel--accent {
-  background: #123b37;
-  color: #ffffff;
+.packaging .subcategory-card:hover .subcategory-card__image {
+  transform: none;
 }
 
-.products__support-label {
-  color: #14877b;
-  font-family: 'Montserrat', system-ui, sans-serif;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
-
-.products__support-panel--accent .products__support-label {
-  color: #ffcc00;
-}
-
-.products__support-panel h3 {
-  max-width: 580px;
-  color: inherit;
-  font-size: 1.45rem;
-  line-height: 1.25;
-}
-
-.products__chips,
-.products__people {
+.packaging__contacts {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding: var(--space-4) var(--space-6);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xs);
 }
 
-.products__chips span,
-.products__people span {
-  display: inline-flex;
-  min-height: 38px;
-  align-items: center;
-  border-radius: 999px;
+.packaging--center .packaging__contacts {
+  justify-content: center;
+}
+
+.packaging__people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.packaging__person {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+}
+
+.packaging__person strong {
+  color: var(--color-ink);
+  font-size: 0.94rem;
   font-weight: 800;
 }
 
-.products__chips span {
-  padding: 8px 14px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  font-size: 0.9rem;
-}
-
-.products__people span {
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 10px 14px;
-  background: #ffffff;
-  color: #17211c;
-  box-shadow: 0 8px 22px rgba(23, 33, 28, 0.08);
-}
-
-.products__people strong {
-  font-size: 0.94rem;
-}
-
-.products__people small {
-  margin-top: 2px;
-  color: #66736c;
+.packaging__person span {
+  color: var(--color-muted);
   font-size: 0.78rem;
   font-weight: 700;
 }
@@ -306,16 +313,13 @@
 }
 
 @media (max-width: 1080px) {
-  .products__grid {
+  .products__grid,
+  .packaging__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 780px) {
-  .products__support {
-    grid-template-columns: 1fr;
-  }
-
   .why-us__container {
     justify-content: center;
   }
@@ -344,29 +348,26 @@
     font-size: 30px;
   }
 
-  .products__support {
-    margin-top: 24px;
-    gap: 14px;
+  .packaging {
+    margin-top: var(--space-8);
   }
 
-  .products__support-panel {
-    min-height: auto;
-    padding: 20px;
-    gap: 16px;
+  .packaging__heading {
+    margin-bottom: var(--space-6);
   }
 
-  .products__support-panel h3 {
-    font-size: 1.12rem;
+  .packaging__heading h2 {
+    font-size: 1.6rem;
   }
 
-  .products__chips,
-  .products__people {
-    gap: 8px;
+  .packaging__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
   }
 
-  .products__chips span,
-  .products__people span {
-    border-radius: 8px;
+  .packaging__contacts {
+    padding: var(--space-4);
+    gap: var(--space-3);
   }
 
   .why-us__card {

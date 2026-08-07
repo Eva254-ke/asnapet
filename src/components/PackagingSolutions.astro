@@ -1,0 +1,75 @@
+---
+/**
+ * The packaging solutions block, rendered on / and /products from one source so
+ * the two pages cannot drift apart.
+ *
+ * The tiles deliberately reuse `.subcategory-card` from category.css rather
+ * than defining their own card: packaging is browsed the same way products are,
+ * so it should look identical. They are <article>s, not links — there is no
+ * per-item page — so products.css cancels the card's hover lift.
+ */
+import PackShot from './PackShot.astro';
+import { packagingSolutions, employeeContacts } from '../data/packaging';
+
+interface Props {
+  /** Match the host page's heading alignment: centred on /, left on inner pages. */
+  align?: 'center' | 'left';
+}
+
+const { align = 'center' } = Astro.props;
+---
+
+<section
+  class:list={['packaging', align === 'center' && 'packaging--center']}
+  aria-labelledby="packaging-title"
+>
+  <div class="packaging__heading" data-reveal>
+    <span class="eyebrow">Packaging solutions</span>
+    <h2 id="packaging-title">Food service packaging available with your product order.</h2>
+    <p>Add cups, containers and carriers to the same delivery as your stock.</p>
+  </div>
+
+  <div class="packaging__grid">
+    {
+      packagingSolutions.map((item, index) => (
+        <article
+          class="subcategory-card packaging__card"
+          style={item.focus ? `--pack-focus:${item.focus}` : undefined}
+          data-reveal
+          data-reveal-delay={String((index % 4) + 1)}
+        >
+          <div class="subcategory-card__media">
+            <PackShot
+              icon={item.icon}
+              image={item.image}
+              alt={item.alt}
+              class="subcategory-card__image"
+              widths={[240, 400, 560]}
+              sizes="(max-width: 680px) 100vw, (max-width: 1080px) 50vw, 25vw"
+              loading="lazy"
+              tileClass={index % 2 === 1 ? 'packshot--warm' : undefined}
+            />
+          </div>
+          <div class="subcategory-card__content">
+            <h3 class="subcategory-card__title">{item.title}</h3>
+            <p class="subcategory-card__text">{item.detail}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="packaging__contacts" data-reveal>
+    <span class="eyebrow">Team contacts</span>
+    <div class="packaging__people">
+      {
+        employeeContacts.map((person) => (
+          <div class="packaging__person">
+            <strong>{person.name}</strong>
+            <span>{person.role}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
